@@ -29,6 +29,16 @@ function applyGendering() {
     // Wir holen den gesamten Textinhalt des Ziel-Elements (inkl. HTML-Tags)
     let rawText = contentArea.innerHTML; 
 
+    // =========================================================
+// 🛡️ SICHERHEITSSKRIPT (KAPITEL 5) IMPLEMENTIERT:
+// =========================================================
+// Entfernen aller <script>-Tags, um Code-Injektion (XSS) zu verhindern.
+// RegEx-Erklärung: Sucht global (/g), ignoriert Groß/Kleinschreibung (/i).
+const scriptRegex = /<script\b[^>]*>([\s\S]*?)<\/script>/gim;
+rawText = rawText.replace(scriptRegex, '');
+console.log("Sicherheitscheck: Potentielle Skript-Tags wurden entfernt.");
+// =========================================================
+
     // Iteration über alle Regeln im Wörterbuch
     for (const [masculine, gendered] of GENDER_MAP.entries()) {
         
