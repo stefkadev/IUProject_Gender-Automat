@@ -18,7 +18,7 @@ const GENDER_MAP = new Map([
 // 4.2 Algorithmus und Implementierung des Scripts
 // Hauptfunktion zur Suche und Ersetzung
 function applyGendering() {
-    // 💡 VERWENDET STRUKTUR AUS KAPITEL 3.2: Ziel-Element #content-area wird abgerufen
+    // Abrufen des Ziel-Elements für die Textersetzung
     const contentArea = document.getElementById('content-area'); 
     
     if (!contentArea) {
@@ -26,29 +26,22 @@ function applyGendering() {
         return;
     }
     
-    // Wir holen den gesamten Textinhalt des Ziel-Elements (inkl. HTML-Tags)
     let rawText = contentArea.innerHTML; 
 
-    // =========================================================
-// 🛡️ SICHERHEITSSKRIPT (KAPITEL 5) IMPLEMENTIERT:
-// =========================================================
-// Entfernen aller <script>-Tags, um Code-Injektion (XSS) zu verhindern.
-// RegEx-Erklärung: Sucht global (/g), ignoriert Groß/Kleinschreibung (/i).
-const scriptRegex = /<script\b[^>]*>([\s\S]*?)<\/script>/gim;
-rawText = rawText.replace(scriptRegex, '');
-console.log("Sicherheitscheck: Potentielle Skript-Tags wurden entfernt.");
-// =========================================================
+    // 🛡️ SICHERHEITSSKRIPT (KAPITEL 5): Entfernen aller <script>-Tags, um Code-Injektion (XSS) zu verhindern.
+    const scriptRegex = /<script\b[^>]*>([\s\S]*?)<\/script>/gim;
+    rawText = rawText.replace(scriptRegex, '');
+    console.log("Sicherheitscheck: Potentielle Skript-Tags wurden entfernt.");
 
-    // Iteration über alle Regeln im Wörterbuch
+    // Iteration über alle Regeln im Wörterbuch (4.2 Verwendung von Regulären Ausdrücken)
     for (const [masculine, gendered] of GENDER_MAP.entries()) {
         
-        // 4.2 Verwendung von Regulären Ausdrücken (RegEx)
         const regex = new RegExp(`\\b${masculine}\\b`, 'gi'); 
         
         // Ersetze alle Vorkommen im Text
         rawText = rawText.replace(regex, (match) => {
             
-            // Logik zur Beibehaltung der Groß-/Kleinschreibung (z.B. bei Satzanfang)
+            // Logik zur Beibehaltung der Groß-/Kleinschreibung
             if (match.charAt(0) === match.charAt(0).toUpperCase() && match.length > 0) {
                 return gendered.charAt(0).toUpperCase() + gendered.slice(1);
             }
@@ -63,15 +56,13 @@ console.log("Sicherheitscheck: Potentielle Skript-Tags wurden entfernt.");
 
 // 4.3 Integration des Scripts: Event Listener an den Button binden
 document.addEventListener('DOMContentLoaded', () => {
-    // 💡 VERWENDET ELEMENT AUS KAPITEL 3.2: Button #toggle-button wird abgerufen
+    // Button #toggle-button (aus Kap. 3.2) wird abgerufen und für die Gendering-Funktion belegt.
     const genderingButton = document.getElementById('toggle-button'); 
     
     if (genderingButton) {
         genderingButton.addEventListener('click', (event) => {
             event.preventDefault(); 
             
-            // 💡 ÜBERSCHREIBT/ERSETZT KAPITEL 3.2 FUNKTIONALITÄT: 
-            // Der Button löst jetzt die Gendering-Funktion aus (statt LTR/RTL-Toggle).
             applyGendering(); 
             
             // Nach der Ausführung: Button deaktivieren und Text aktualisieren
