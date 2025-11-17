@@ -64,3 +64,17 @@ main {
         padding: 1.5em 2em; 
     }
 }
+
+/* --- Regel zur Umschaltung der Schriftkultur (RTL-Simulation) --- */
+
+/* Wir verwenden die Klasse .rtl-layout auf dem Body, um die gesamte Seite zu beeinflussen. */
+body.rtl-layout main {
+    /* Die Spalten werden umgekehrt: 1fr (Content) kommt vor 250px (Navigation) */
+    grid-template-columns: 1fr 250px; 
+}
+
+body.rtl-layout #local-nav {
+    /* Die Navigation soll in der letzten Spalte starten (Grid Spalte 2) */
+    grid-column: 2;
+    /* Der Hauptinhalt startet in der ersten Spalte (Grid Spalte 1) */
+}
