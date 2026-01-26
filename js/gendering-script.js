@@ -1,3 +1,9 @@
+/**
+ * @file gendering-script.js
+ * @client LUR-CH Fachverlag
+ * @description Kernlogik zur automatisierten Textanpassung (jQuery-basiert)
+ */
+
 // 4.1 Definition der Gendering-Regeln (Wörterbuch)
 // Die Map speichert die Regeln: Schlüssel (generisches Maskulinum) -> Wert (Gender-Doppelpunkt)
 const GENDER_MAP = new Map([
