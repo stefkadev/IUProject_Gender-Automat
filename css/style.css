@@ -72,10 +72,21 @@ main {
 
 /* --- Regel zur Umschaltung der Schriftkultur (RTL-Simulation) --- */
 
-/* Wir verwenden die Klasse .rtl-layout auf dem Body, um die gesamte Seite zu beeinflussen. */
-body.rtl-layout main {
-    /* Die Spalten werden umgekehrt: 1fr (Content) kommt vor 250px (Navigation) */
-    grid-template-columns: 1fr 250px; 
-}
+@media screen and (min-width: 768px) {
+    /* Wir nutzen die Klasse .rtl-layout auf dem Haupt-Container oder Body */
+    body.rtl-layout main {
+        /* 1. Schritt: Spaltenbreiten im Grid tauschen */
+        grid-template-columns: 1fr 250px; 
+    }
 
-/* Der redundant gewordene Selektor body.rtl-layout #local-nav wurde entfernt. */
+    /* 2. Schritt: Elemente physisch zuordnen */
+    /* Die Navigation soll in die zweite Spalte (rechts) */
+    body.rtl-layout .local-nav {
+        grid-column: 2;
+    }
+
+    /* Der Inhaltsbereich soll in die erste Spalte (links) */
+    body.rtl-layout .content-area {
+        grid-column: 1;
+    }
+}
