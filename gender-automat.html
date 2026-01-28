@@ -2,17 +2,14 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LUR-CH Fachverlag | Gender-Automat</title>
     <link rel="stylesheet" href="css/style.css"> 
 </head>
 <body>
     
 <header>
-    <div class="brand-container">
-        <span id="brand-name">LUR-CH Fachverlag</span>
-    </div>
-    <h1>Interaktiver Gender-Automat <small>(Tool-Modus)</small></h1>
+    <div class="brand-container"><span id="brand-name">LUR-CH Fachverlag</span></div>
+    <h1>Interaktiver Gender-Automat</h1>
     <nav id="main-nav">
         <ul>
             <li><a href="index.html">Fachverlag-Home</a></li>
@@ -24,33 +21,36 @@
     <button id="toggle-layout-btn">Layout spiegeln (RTL)</button>
 </header>
 
-<main class="layout-wrapper">
+<main class="layout-wrapper" id="main-layout">
     <nav id="local-nav">
-        <ul>
-            <li><a href="#anleitung1">Anleitung 1: Kohle-Hydrierung</a></li>
-            <li><a href="#anleitung2">Anleitung 2: Lurch-Management</a></li>
-            <li><a href="#anleitung3">Anleitung 3: Panik-Prävention</a></li>
-        </ul>
+        <div class="nav-card">
+            <h3>Anleitungen</h3>
+            <ul>
+                <li><a href="#anleitung1" class="nav-trigger">Kohle-Hydrierung</a></li>
+                <li><a href="#anleitung2" class="nav-trigger">Lurch-Management</a></li>
+                <li><a href="#anleitung3" class="nav-trigger">Panik-Prävention</a></li>
+            </ul>
+        </div>
     </nav>
     
     <section id="content-area">
-        <div class="tool-intro" style="margin-bottom: 20px; padding: 15px; border-left: 4px solid #004a99; background: #eef4fb; border-radius: 0 4px 4px 0;">
-            <strong>Tool-Modus:</strong> Wählen Sie links eine Anleitung aus dem Menü, um den Text anzuzeigen. Nutzen Sie dann die Buttons unten für den Gender-Check.
+        <div class="tool-intro">
+            <strong>Tool-Modus aktiv:</strong> Bitte wählen Sie links eine Anleitung aus.
         </div>
 
-        <article id="anleitung1" class="guide-content">
-            <h2>Anleitung 1: Inbetriebnahme der Kohle-Anlage</h2>
-            <p>Jeder <strong>Bergarbeiter</strong> muss vor Schichtbeginn sicherstellen, dass die Fackel brennt. Unser <strong>Chef-Ingenieur</strong> hat die Statik der Mine geprüft. Als <strong>Auftraggeber</strong> ist Herr Range persönlich für die Qualität der Kohle verantwortlich. Der <strong>Zuschauer</strong> (oder <strong>Leser</strong>) sollte während der Produktion nicht in die Lava springen.</p>
+        <article id="anleitung1" class="guide-article">
+            <h2>Anleitung 1: Kohle-Hydrierung</h2>
+            <p>Jeder <strong>Bergarbeiter</strong> muss die Fackel prüfen. Unser <strong>Chef-Ingenieur</strong> überwacht die Statik.</p>
         </article>
 
-        <article id="anleitung2" class="guide-content">
-            <h2>Anleitung 2: Handhabung der Lurch-Bestände</h2>
-            <p>Der <strong>Mitarbeiter</strong> im Lurch-Gehege füttert die Tiere täglich mit Keksen. Jeder <strong>Pfleger</strong> ist dazu angehalten, die Lurche nicht zu erschrecken. Nur der <strong>Ober-Lurch</strong> mit Admin-Rechten darf die Gehegetür öffnen. Die <strong>Besucher</strong> der Anlage werden gebeten, die Ruhe zu bewahren.</p>
+        <article id="anleitung2" class="guide-article">
+            <h2>Anleitung 2: Lurch-Management</h2>
+            <p>Der <strong>Mitarbeiter</strong> füttert die Lurche. Jeder <strong>Pfleger</strong> achtet auf Ruhe.</p>
         </article>
 
-        <article id="anleitung3" class="guide-content">
-            <h2>Anleitung 3: Wartung im Panik-Modus</h2>
-            <p>Für die Wartung der Panik-Buttons sind die <strong>Techniker</strong> zuständig. Der <strong>Sicherheits-Beauftragte</strong> hat die Übersicht über alle Fluchtwege. Beachten Sie, dass jeder <strong>Administrator</strong> im Falle einer „Hering-Invasion" die Fernwartung aktivieren muss.</p>
+        <article id="anleitung3" class="guide-article">
+            <h2>Anleitung 3: Panik-Prävention</h2>
+            <p>Die <strong>Techniker</strong> warten die Buttons. Der <strong>Sicherheits-Beauftragte</strong> hilft.</p>
         </article>
 
         <div class="gender-controls">
@@ -60,26 +60,22 @@
     </section>
 </main>
     
-<footer>
-    <p>© 2026 – LUR-CH Fachverlag | <a href="impressum.html" style="color: white;">Impressum</a></p>
-</footer>
+<footer><p>© 2026 – LUR-CH Fachverlag | <a href="impressum.html">Impressum</a></p></footer>
 
 <script src="js/gendering-script.js"></script>
 <script src="js/layout-script.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const navLinks = document.querySelectorAll('#local-nav a');
-        const articles = document.querySelectorAll('.guide-content');
+        const triggers = document.querySelectorAll('.nav-trigger');
+        const articles = document.querySelectorAll('.guide-article');
 
-        navLinks.forEach(link => {
+        triggers.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                // Alle verstecken
-                articles.forEach(art => art.classList.remove('active'));
-                // Ziel anzeigen
-                const targetId = link.getAttribute('href').substring(1);
-                document.getElementById(targetId).classList.add('active');
+                articles.forEach(a => a.style.display = 'none'); // Alle verstecken
+                const id = link.getAttribute('href').substring(1);
+                document.getElementById(id).style.display = 'block'; // Ziel zeigen
             });
         });
     });
