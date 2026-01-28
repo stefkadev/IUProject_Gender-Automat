@@ -61,7 +61,7 @@ header { background: #004a99; color: white; padding: 1rem 5%; display: flex; jus
 footer { text-align: center; padding: 25px; background: #333; color: white; margin-top: 50px; }
 footer a { color: #ccc; text-decoration: none; font-size: 0.9rem; }
 
-/* Markierung für die aktuelle Seite im Menü */
+/* --- 7. Markierung für die aktuelle Seite im Menü --- */
 #main-nav a.active {
     text-decoration: underline;
     text-underline-offset: 8px; 

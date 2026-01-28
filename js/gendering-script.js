@@ -4,15 +4,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Wörterbuch für beide Richtungen
     const genderMap = {
-        "Bergarbeiter": "Bergarbeitende",
-        "Chef-Ingenieur": "Leitung der Ingenieurstechnik",
-        "Auftraggeber": "Auftraggebende Person",
-        "Mitarbeiter": "Mitarbeitende",
-        "Pfleger": "Pflegefachkräfte",
-        "Techniker": "Technik-Team",
-        "Sicherheits-Beauftragte": "Sicherheits-Verantwortliche",
-        "Administrator": "System-Administration"
-    };
+    "Bergarbeiter": "Bergarbeiter*innen",
+    "Chef-Ingenieur": "Chef-Ingenieur*innen",
+    "Auftraggeber": "Auftraggeber*innen",
+    "Mitarbeiter": "Mitarbeiter*innen",
+    "Pfleger": "Pfleger*innen",
+    "Techniker": "Techniker*innen",
+    "Sicherheits-Beauftragte": "Sicherheits-Beauftragte", 
+    "Administrator": "Administrator*innen",
+    "Herausgeber": "Herausgeber*innen",
+    "Archivar": "Archiv-Fachkraft", 
+    "Teilnehmer": "Teilnehmer*innen",
+    "Experten": "Expert*innen",
+    "Zuschauer": "Zuschauer*innen",
+    "Leser": "Leser*innen",
+    "Besucher": "Besucher*innen",
+    "Ober-Lurch": "Ober-Lurch*in" 
+};
 
     function updateButtonStyles(active) {
         if (active === 'neutral') {
