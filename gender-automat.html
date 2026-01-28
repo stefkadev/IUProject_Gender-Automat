@@ -15,7 +15,8 @@
     <h1>Interaktiver Gender-Automat <small>(Tool-Modus)</small></h1>
     <nav id="main-nav">
         <ul>
-            <li><a href="gender-automat.html">Fachverlag-Home</a></li>
+            <li><a href="index.html">Fachverlag-Home</a></li>
+            <li><a href="gender-automat.html">Gender-Automat</a></li>
             <li><a href="archiv.html">Archiv</a></li>
             <li><a href="aktuelles.html">Aktuelles</a></li>
         </ul>
@@ -65,6 +66,32 @@
 
 <script src="js/gendering-script.js"></script>
 <script src="js/layout-script.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLinks = document.querySelectorAll('#local-nav a');
+        const articles = document.querySelectorAll('.guide-content');
+
+        function showArticle(id) {
+            articles.forEach(art => art.classList.remove('active'));
+            const target = document.getElementById(id);
+            if (target) {
+                target.classList.add('active');
+            }
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                showArticle(targetId);
+            });
+        });
+
+        // Zeige die erste Anleitung beim Start
+        if (articles.length > 0) articles[0].classList.add('active');
+    });
+</script>
         
 </body>
 </html>
