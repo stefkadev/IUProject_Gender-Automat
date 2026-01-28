@@ -1,92 +1,46 @@
-/* * Projekt: Gender-Automat
- * Organisation: LUR-CH Fachverlag
- * Beschreibung: Stylesheet für responsive technische Dokumentationen
- */
-
 /* --- 3.2 Mobile-First: Basis-Layout und Styling --- */
 
-/* Allgemeine Resets und Grund-Typografie */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+.guide-content {
+    display: none; 
 }
 
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f4; /* Hellgrauer Hintergrund */
+.guide-content.active {
+    display: block; /* Nur die aktive Anleitung zeigen */
+    animation: fadeIn 0.5s;
 }
 
-/* Header-Layout (Mobile: Vertikal stapeln) */
-header {
-    background: #333; /* Dunkle Farbe für Header */
-    color: #fff;
-    padding: 1em;
-    display: flex; 
-    flex-direction: column; /* Standard auf Mobile: alles untereinander */
-    align-items: center; 
-    text-align: center;
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
-
-header h1 {
-    font-size: 1.5em;
-    margin-bottom: 0.5em;
-}
-
-/* Footer-Layout */
-footer {
-    background: #555;
-    color: #fff;
-    text-align: center;
-    padding: 1em;
-    font-size: 0.8em;
-}
-
-/* Content-Bereich (Mobile: Volle Breite) */
-main {
-    padding: 1em;
-    min-height: 80vh; 
-}
-
 
 /* --- Media Query für Desktop/Tablet (Zweispaltiges Layout) --- */
 @media screen and (min-width: 768px) {
-    
-    /* Header-Anpassung: Elemente nebeneinander */
     header {
-        flex-direction: row; /* Wechsel zu horizontaler Ausrichtung */
-        justify-content: space-between; /* Logo links, Navigation rechts */
+        flex-direction: row;
+        justify-content: space-between;
         padding: 1em 2em;
     }
 
-    /* Content-Bereich: CSS Grid für zwei Spalten vorbereiten */
     main {
         display: grid;
-        /* Zwei Spalten definiert: 1. Navigation (250px), 2. Content (Rest) */
         grid-template-columns: 250px 1fr; 
-        gap: 1.5em; /* Abstand zwischen lokaler Navigation und Hauptinhalt */
+        gap: 1.5em;
         padding: 1.5em 2em; 
     }
+
 }
 
 /* --- Regel zur Umschaltung der Schriftkultur (RTL-Simulation) --- */
-
 @media screen and (min-width: 768px) {
-    /* Wenn die Klasse .rtl-layout am main-Tag (layout-wrapper) aktiv ist */
     main.layout-wrapper.rtl-layout {
-        /* 1. Schritt: Spaltenbreiten im Grid tauschen */
         grid-template-columns: 1fr 250px; 
     }
 
-    /* 2. Schritt: Elemente über IDs physisch neu zuordnen (# statt .) */
-    
-    /* Die Navigation soll in die zweite Spalte (rechts) */
     main.layout-wrapper.rtl-layout #local-nav {
         grid-column: 2;
     }
 
-    /* Der Inhaltsbereich soll in die erste Spalte (links) */
     main.layout-wrapper.rtl-layout #content-area {
         grid-column: 1;
     }

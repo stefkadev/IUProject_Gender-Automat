@@ -1,11 +1,10 @@
 /**
  * @file gendering-script.js
  * @client LUR-CH Fachverlag
- * @description Kernlogik zur automatisierten Textanpassung mittels Gender-Stern (*)
+ * @description Kernlogik zur automatisierten Textanpassung und Single-Page-Navigation
  */
 
 // 4.1 Definition der Gendering-Regeln (Wörterbuch)
-// Die Map speichert die Regeln: Schlüssel (Maskulinum) -> Wert (Gender-Stern)
 const GENDER_MAP = new Map([
     ["Programmierer", "Programmierer*in"],
     ["Benutzer", "Benutzer*in"],
@@ -38,7 +37,7 @@ function applyGendering() {
     
     let rawText = contentArea.innerHTML; 
 
-    // SICHERHEITSSKRIPT: Entfernen von <script>-Tags (XSS-Schutz)
+    // SICHERHEITSSKRIPT: Entfernen von <script>-Tags (XSS-Schutz nach Kap. 5)
     const scriptRegex = /<script\b[^>]*>([\s\S]*?)<\/script>/gim;
     rawText = rawText.replace(scriptRegex, '');
 
@@ -48,7 +47,7 @@ function applyGendering() {
         const regex = new RegExp(`\\b${masculine}\\b`, 'gi'); 
         
         rawText = rawText.replace(regex, (match) => {
-            // Beibehaltung der Groß-/Kleinschreibung (z.B. am Satzanfang)
+            // Beibehaltung der Groß-/Kleinschreibung (z. B. am Satzanfang)
             if (match.charAt(0) === match.charAt(0).toUpperCase()) {
                 return gendered.charAt(0).toUpperCase() + gendered.slice(1);
             }
@@ -61,9 +60,10 @@ function applyGendering() {
     console.log("Gendering mit Gender-Stern abgeschlossen.");
 }
 
-// Event Listener Integration
+// Zentrales Event-Management
 document.addEventListener('DOMContentLoaded', () => {
-    // Falls dein HTML <button id="toggle-button"> nutzt, hier anpassen:
+    
+    /* --- Gendering Funktionalität --- */
     const genderingButton = document.getElementById('toggle-button'); 
     
     if (genderingButton) {
@@ -71,7 +71,34 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault(); 
             applyGendering(); 
             genderingButton.textContent = "Gendering angewendet";
-            genderingButton.disabled = true;
+            genderingButton.disabled = true; // Verhindert Mehrfachanwendung
         });
+    }
+
+    /* --- Single-Page-Navigation (Anleitungen ein/ausblenden) --- */
+    const navLinks = document.querySelectorAll('#local-nav a');
+    const guides = document.querySelectorAll('.guide-content');
+
+    if (navLinks.length > 0 && guides.length > 0) {
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Alle Anleitungen verstecken
+                guides.forEach(g => g.classList.remove('active'));
+                
+                // Ziel-ID aus href extrahieren und anzeigen
+                const targetId = link.getAttribute('href').substring(1);
+                const targetGuide = document.getElementById(targetId);
+                
+                if (targetGuide) {
+                    targetGuide.classList.add('active');
+                    console.log(`Navigation zu: ${targetId}`);
+                }
+            });
+        });
+
+        // Standard-Ansicht: Erste Anleitung aktivieren
+        guides[0].classList.add('active');
     }
 });
