@@ -9,10 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
         "Mitarbeiter": "Mitarbeiter*innen",
         "Pfleger": "Pfleger*innen",
         "Techniker": "Techniker*innen",
-        "Sicherheits-Beauftragte": "Sicherheits-Beauftragte",
         "Administrator": "Administrator*innen",
         "Herausgeber": "Herausgeber*innen",
-        "Archivar": "Archiv-Fachkraft",
+        "Archivar": "Archivar*innen",
         "Teilnehmer": "Teilnehmer*innen",
         "Experten": "Expert*innen",
         "Zuschauer": "Zuschauer*innen",
@@ -21,25 +20,29 @@ document.addEventListener('DOMContentLoaded', () => {
         "Ober-Lurch": "Ober-Lurch*in"
     };
 
+    /**
+     * XSS-Schutz 
+     */
     function transformText(toNeutral) {
         const activeArticle = document.querySelector('.guide-article[style*="display: block"]');
         if (!activeArticle) return;
 
-        let html = activeArticle.innerHTML;
+        const boldTerms = activeArticle.querySelectorAll('strong');
 
-        for (const [maskulin, neutral] of Object.entries(genderMap)) {
-            if (toNeutral) {
-                const regex = new RegExp(maskulin + "(?!\\*)", 'g');
-                html = html.replace(regex, neutral);
-            } else {
-                
-                const regex = new RegExp(neutral.replace('*', '\\*'), 'g');
-                html = html.replace(regex, maskulin);
+        boldTerms.forEach(term => {
+            let currentText = term.textContent; 
+            
+            for (const [maskulin, neutral] of Object.entries(genderMap)) {
+                if (toNeutral && currentText === maskulin) {
+                    term.textContent = neutral; 
+                } else if (!toNeutral && currentText === neutral) {
+                    term.textContent = maskulin;
+                }
             }
-        }
-        activeArticle.innerHTML = html;
+        });
     }
 
+    // Event-Listener für die Buttons
     btnNeutral.addEventListener('click', () => {
         transformText(true);
         updateButtonStyles('neutral');
@@ -50,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateButtonStyles('maskulin');
     });
 
+    // Hilfsfunktion für Optik
     function updateButtonStyles(active) {
         if (active === 'neutral') {
             btnNeutral.style.backgroundColor = '#003366';
@@ -63,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btnNeutral.style.color = '#333';
         }
     }
-    
+
+    // Initialer Status
     updateButtonStyles('maskulin');
 });
