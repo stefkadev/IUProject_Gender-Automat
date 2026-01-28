@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <title>Gender-Automat | LUR-CH Fachverlag</title>
     <link rel="stylesheet" href="css/style.css"> 
+    <style>
+        /* Initialzustand: Buttons sind versteckt */
+        .gender-controls { display: none; }
+    </style>
 </head>
 <body>
 <header>
     <div class="brand-container"><span id="brand-name">LUR-CH Fachverlag</span></div>
-    
     <nav id="main-nav">
         <ul>
             <li><a href="index.html">Fachverlag-Home</a></li>
@@ -38,23 +41,22 @@
             <h2>Anleitung 1: Kohle-Hydrierung</h2>
             <p>Jeder <strong>Bergarbeiter</strong> muss die Fackel prüfen. Unser <strong>Chef-Ingenieur</strong> überwacht die Statik.</p>
         </article>
-
         <article id="anleitung2" class="guide-article">
             <h2>Anleitung 2: Lurch-Management</h2>
             <p>Der <strong>Mitarbeiter</strong> füttert die Lurche. Jeder <strong>Pfleger</strong> achtet auf Ruhe.</p>
         </article>
-
         <article id="anleitung3" class="guide-article">
             <h2>Anleitung 3: Panik-Prävention</h2>
             <p>Die <strong>Techniker</strong> warten die Buttons. Der <strong>Sicherheits-Beauftragte</strong> hilft.</p>
         </article>
 
-        <div class="gender-controls">
+        <div id="controls" class="gender-controls">
             <button id="btn-neutral">Genderneutral</button>
             <button id="btn-maskulin">Maskulin (Original)</button>
         </div>
     </section>
 </main>
+
 <footer><p>© 2026 – LUR-CH Fachverlag | <a href="impressum.html">Impressum</a></p></footer>
 
 <script src="js/gendering-script.js"></script>
@@ -63,12 +65,20 @@
     document.addEventListener('DOMContentLoaded', () => {
         const triggers = document.querySelectorAll('.nav-trigger');
         const articles = document.querySelectorAll('.guide-article');
+        const controls = document.getElementById('controls');
+
         triggers.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
+                // 1. Alle Artikel verstecken
                 articles.forEach(a => a.style.display = 'none');
+                
+                // 2. Gewählten Artikel zeigen
                 const id = link.getAttribute('href').substring(1);
                 document.getElementById(id).style.display = 'block';
+                
+                // 3. Buttons einblenden
+                controls.style.display = 'flex';
             });
         });
     });
