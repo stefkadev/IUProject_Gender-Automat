@@ -1,13 +1,22 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const toggleButton = document.getElementById('toggle-layout-btn');
-    const mainContainer = document.querySelector('.layout-wrapper');
+$(document).ready(function() {
+    // Selektoren mit dem jQuery-Dollarzeichen
+    const $toggleButton = $('#toggle-layout-btn');
+    const $mainContainer = $('.layout-wrapper');
 
-    if (toggleButton && mainContainer) {
-        toggleButton.addEventListener('click', (e) => {
+    // Prüfen, ob die Elemente auf der aktuellen Seite existieren
+    if ($toggleButton.length && $mainContainer.length) {
+        $toggleButton.on('click', function(e) {
             e.preventDefault();
-            const isRTL = mainContainer.classList.toggle('rtl-layout');
-            toggleButton.textContent = isRTL ? "Schriftkultur links (LTR)" : "Schriftkultur rechts (RTL)";
-            console.log("Layout-Modus geändert");
+            
+            // Die Klasse 'rtl-layout' umschalten
+            $mainContainer.toggleClass('rtl-layout');
+            
+            // Prüfen, welche Klasse jetzt aktiv ist, um den Button-Text zu ändern
+            const isRTL = $mainContainer.hasClass('rtl-layout');
+            const newText = isRTL ? "Schriftkultur links (LTR)" : "Schriftkultur rechts (RTL)";
+            
+            $toggleButton.text(newText);
+            console.log("Layout via jQuery angepasst.");
         });
     }
 });

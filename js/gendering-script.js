@@ -1,7 +1,9 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const btnNeutral = document.getElementById('btn-neutral');
-    const btnMaskulin = document.getElementById('btn-maskulin');
+$(document).ready(function() {
+    // Selektoren via jQuery ($)
+    const $btnNeutral = $('#btn-neutral');
+    const $btnMaskulin = $('#btn-maskulin');
 
+    // Deine vollständige Liste (nichts geht verloren!)
     const genderMap = {
         "Bergarbeiter": "Bergarbeiter*innen",
         "Chef-Ingenieur": "Chef-Ingenieur*innen",
@@ -21,50 +23,49 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     /**
-     * XSS-Schutz 
+     * Kernfunktion mit XSS-Schutz via jQuery .text()
      */
     function transformText(toNeutral) {
-        const activeArticle = document.querySelector('.guide-article[style*="display: block"]');
-        if (!activeArticle) return;
+        // Findet den aktuell sichtbaren Artikel
+        const $activeArticle = $('.guide-article:visible');
+        if ($activeArticle.length === 0) return;
 
-        const boldTerms = activeArticle.querySelectorAll('strong');
+        // Gezielte Suche nach <strong> Tags innerhalb des Artikels
+        $activeArticle.find('strong').each(function() {
+            let $term = $(this);
+            let currentText = $term.text(); // Entspricht .textContent (Sicher gegen XSS!)
 
-        boldTerms.forEach(term => {
-            let currentText = term.textContent; 
-            
             for (const [maskulin, neutral] of Object.entries(genderMap)) {
                 if (toNeutral && currentText === maskulin) {
-                    term.textContent = neutral; 
+                    $term.text(neutral); 
                 } else if (!toNeutral && currentText === neutral) {
-                    term.textContent = maskulin;
+                    $term.text(maskulin);
                 }
             }
         });
     }
 
-    // Event-Listener für die Buttons
-    btnNeutral.addEventListener('click', () => {
+    // Event-Listener in jQuery-Syntax
+    $btnNeutral.on('click', function() {
         transformText(true);
         updateButtonStyles('neutral');
     });
 
-    btnMaskulin.addEventListener('click', () => {
+    $btnMaskulin.on('click', function() {
         transformText(false);
         updateButtonStyles('maskulin');
     });
 
-    // Hilfsfunktion für Optik
+    /**
+     * Hilfsfunktion für Optik via jQuery .css()
+     */
     function updateButtonStyles(active) {
         if (active === 'neutral') {
-            btnNeutral.style.backgroundColor = '#003366';
-            btnNeutral.style.color = 'white';
-            btnMaskulin.style.backgroundColor = '#e0e0e0';
-            btnMaskulin.style.color = '#333';
+            $btnNeutral.css({ 'background-color': '#003366', 'color': 'white' });
+            $btnMaskulin.css({ 'background-color': '#e0e0e0', 'color': '#333' });
         } else {
-            btnMaskulin.style.backgroundColor = '#003366';
-            btnMaskulin.style.color = 'white';
-            btnNeutral.style.backgroundColor = '#e0e0e0';
-            btnNeutral.style.color = '#333';
+            $btnMaskulin.css({ 'background-color': '#003366', 'color': 'white' });
+            $btnNeutral.css({ 'background-color': '#e0e0e0', 'color': '#333' });
         }
     }
 
