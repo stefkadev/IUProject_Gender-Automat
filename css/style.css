@@ -1,47 +1,61 @@
-/* --- 3.2 Mobile-First: Basis-Layout und Styling --- */
+/* Globale Resets */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-.guide-content {
-    display: none; 
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
 }
 
-.guide-content.active {
-    display: block; /* Nur die aktive Anleitung zeigen */
-    animation: fadeIn 0.5s;
+/* Header mit dem neuen Blau */
+header {
+    background: #004a99; 
+    color: #fff;
+    padding: 1.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+header button {
+    padding: 8px 15px;
+    cursor: pointer;
+    background: #fff;
+    color: #004a99;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
 }
 
-/* --- Media Query für Desktop/Tablet (Zweispaltiges Layout) --- */
+footer {
+    background: #555;
+    color: #fff;
+    text-align: center;
+    padding: 1em;
+}
+
+/* Single-Page Logik */
+.guide-content { display: none; }
+.guide-content.active { display: block; animation: fadeIn 0.5s; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Desktop-Layout */
 @media screen and (min-width: 768px) {
-    header {
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 1em 2em;
-    }
-
-    main {
+    header { flex-direction: row; justify-content: space-between; }
+    main.layout-wrapper {
         display: grid;
-        grid-template-columns: 250px 1fr; 
-        gap: 1.5em;
-        padding: 1.5em 2em; 
+        grid-template-columns: 250px 1fr;
+        gap: 2em;
+        padding: 2em;
+        min-height: 80vh;
     }
-
 }
 
-/* --- Regel zur Umschaltung der Schriftkultur (RTL-Simulation) --- */
+/* RTL Spiegelung */
 @media screen and (min-width: 768px) {
-    main.layout-wrapper.rtl-layout {
-        grid-template-columns: 1fr 250px; 
-    }
-
-    main.layout-wrapper.rtl-layout #local-nav {
-        grid-column: 2;
-    }
-
-    main.layout-wrapper.rtl-layout #content-area {
-        grid-column: 1;
-    }
+    main.layout-wrapper.rtl-layout { grid-template-columns: 1fr 250px; }
+    main.layout-wrapper.rtl-layout #local-nav { grid-column: 2; }
+    main.layout-wrapper.rtl-layout #content-area { grid-column: 1; }
 }
