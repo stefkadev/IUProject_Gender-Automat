@@ -9,11 +9,14 @@
 <body>
     
 <header>
-    <div class="brand-container"><span id="brand-name">LUR-CH Fachverlag</span></div>
+    <div class="brand-container">
+        <span id="brand-name">LUR-CH Fachverlag</span>
+    </div>
     <h1>Aktuelle Meldungen</h1>
     <nav id="main-nav">
         <ul>
-            <li><a href="gender-automat.html">Fachverlag-Home</a></li>
+            <li><a href="index.html">Fachverlag-Home</a></li>
+            <li><a href="gender-automat.html">Gender-Automat</a></li>
             <li><a href="archiv.html">Archiv</a></li>
             <li><a href="aktuelles.html">Aktuelles</a></li>
         </ul>
@@ -21,45 +24,63 @@
     <button id="toggle-layout-btn">Layout spiegeln (RTL)</button>
 </header>
 
-<main class="layout-wrapper"> <nav id="local-nav">
-        <ul>
-            <li><a href="#news1">Hering-Invasion</a></li>
-            <li><a href="#news2">Besuchertag</a></li>
-        </ul>
+<main class="layout-wrapper"> 
+    <nav id="local-nav">
+        <div class="nav-card">
+            <h3>News-Navigation</h3>
+            <ul>
+                <li><a href="#news1" class="nav-trigger">Hering-Invasion</a></li>
+                <li><a href="#news2" class="nav-trigger">Besuchertag</a></li>
+            </ul>
+        </div>
     </nav>
     
     <section id="content-area">
-        <article id="news1" class="guide-content">
+        <div class="tool-intro">
+            <strong>News-Ticker:</strong> Hier finden Sie die neuesten Entwicklungen rund um den LUR-CH Fachverlag.
+        </div>
+
+        <article id="news1" class="guide-article">
             <h2>Eilmeldung: Die Hering-Invasion</h2>
-            <p>Aktuell warnt unser*e <strong>Administrator*in</strong> vor einer digitalen Hering-Invasion...</p>
+            <p>Aktuell warnt unser <strong>Administrator</strong> vor einer digitalen Hering-Invasion in den Serverräumen der Mine. Es wird geraten, die Fernwartung nur über gesicherte VPN-Tunnel zu starten.</p>
         </article>
-        <article id="news2" class="guide-content">
+
+        <article id="news2" class="guide-article">
             <h2>Besuchertag im Lurch-Gehege</h2>
-            <p>Nächste Woche begrüßt unser*e <strong>Chef-Ingenieur*in</strong> eine Gruppe...</p>
+            <p>Nächste Woche begrüßt unser <strong>Chef-Ingenieur</strong> eine Gruppe von Fachbesuchern. Die <strong>Techniker</strong> bereiten bereits die Vorführungen der Panik-Buttons vor.</p>
         </article>
     </section>
 </main>
 
 <footer>
-    <p>© 2026 – LUR-CH Fachverlag | <a href="impressum.html" style="color: white; text-decoration: none;">Impressum</a></p>
+    <p>© 2026 – LUR-CH Fachverlag | <a href="impressum.html">Impressum</a></p>
 </footer>
 
 <script src="js/layout-script.js"></script>
 
 <script>
-    // Lokale Navigation für die Info-Seite
+    // Lokale Navigation für die Info-Seite (News umschalten)
     document.addEventListener('DOMContentLoaded', () => {
-        const navLinks = document.querySelectorAll('#local-nav a');
-        const guides = document.querySelectorAll('.guide-content');
+        const navLinks = document.querySelectorAll('.nav-trigger');
+        const articles = document.querySelectorAll('.guide-article');
+
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                guides.forEach(g => g.classList.remove('active'));
+                // Alle News verstecken
+                articles.forEach(art => art.style.display = 'none');
+                
+                // Ziel-News anzeigen
                 const targetId = link.getAttribute('href').substring(1);
-                document.getElementById(targetId).classList.add('active');
+                const targetArt = document.getElementById(targetId);
+                if (targetArt) {
+                    targetArt.style.display = 'block';
+                }
             });
         });
-        if (guides.length > 0) guides[0].classList.add('active');
+
+        // Standardmäßig die erste News-Meldung anzeigen
+        if (articles.length > 0) articles[0].style.display = 'block';
     });
 </script>
 </body>

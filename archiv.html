@@ -12,7 +12,8 @@
     <h1>Verlags-Archiv</h1>
     <nav id="main-nav">
         <ul>
-            <li><a href="gender-automat.html">Fachverlag-Home</a></li>
+            <li><a href="index.html">Fachverlag-Home</a></li>
+            <li><a href="gender-automat.html">Gender-Automat</a></li>
             <li><a href="archiv.html">Archiv</a></li>
             <li><a href="aktuelles.html">Aktuelles</a></li>
         </ul>
@@ -22,47 +23,60 @@
 
 <main class="layout-wrapper">
     <nav id="local-nav">
-        <ul>
-            <li><a href="#anleitung1">Verlagsgeschichte</a></li>
-            <li><a href="#anleitung2">Alte Berichte</a></li>
-        </ul>
+        <div class="nav-card">
+            <h3>Archiv-Themen</h3>
+            <ul>
+                <li><a href="#anleitung1" class="nav-trigger">Verlagsgeschichte</a></li>
+                <li><a href="#anleitung2" class="nav-trigger">Alte Berichte</a></li>
+            </ul>
+        </div>
     </nav>
     
     <section id="content-area">
-        <article id="anleitung1" class="guide-content">
+        <div class="tool-intro">
+            <strong>Historische Bestände:</strong> Hier finden Sie digitalisierte Dokumente aus der Gründungszeit des Verlags.
+        </div>
+
+        <article id="anleitung1" class="guide-article">
             <h2>Archiv-Eintrag: Die Gründung der Lurch-Werke</h2>
-            <p>Als unser*e erste*r <strong>Herausgeber*in</strong> die Hallen des Verlags betrat, ahnte noch kein*e <strong>Mitarbeiter*in</strong>, dass wir einmal Marktführer für amphibische Fachliteratur werden würden. Jede*r <strong>Archivar*in</strong> pflegt heute die Dokumente über die frühen Tage der Kohle-Hydrierung mit größter Sorgfalt.</p>
+            <p>Als unser erster <strong>Herausgeber</strong> die Hallen des Verlags betrat, ahnte noch kein <strong>Mitarbeiter</strong>, dass wir einmal Marktführer für amphibische Fachliteratur werden würden. Jeder <strong>Archivar</strong> pflegt heute die Dokumente über die frühen Tage der Kohle-Hydrierung mit größter Sorgfalt.</p>
         </article>
 
-        <article id="anleitung2" class="guide-content">
+        <article id="anleitung2" class="guide-article">
             <h2>Historische Wartungsberichte (1990er)</h2>
-            <p>In den 90ern musste jede*r <strong>Techniker*in</strong> noch manuell die Lurch-Gehege kalibrieren. Ein*e <strong>Ingenieur*in</strong> jener Zeit berichtet, dass die Arbeit unter Tage besonders für <strong>Bergarbeiter*innen</strong> riskant war.</p>
+            <p>In den 90ern musste jeder <strong>Techniker</strong> noch manuell die Lurch-Gehege kalibrieren. Ein <strong>Ingenieur</strong> jener Zeit berichtet, dass die Arbeit unter Tage besonders für <strong>Bergarbeiter</strong> riskant war.</p>
         </article>
-        </section>
+    </section>
 </main>
 
 <footer>
-    <p>© 2026 – LUR-CH Fachverlag | <a href="impressum.html" style="color: white; text-decoration: none;">Impressum</a></p>
+    <p>© 2026 – LUR-CH Fachverlag | <a href="impressum.html">Impressum</a></p>
 </footer>
 
 <script src="js/layout-script.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const navLinks = document.querySelectorAll('#local-nav a');
-        const guides = document.querySelectorAll('.guide-content');
+        const navLinks = document.querySelectorAll('.nav-trigger');
+        const articles = document.querySelectorAll('.guide-article');
+
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                guides.forEach(g => g.classList.remove('active'));
+                // Alle Artikel verstecken
+                articles.forEach(a => a.style.display = 'none');
+                
+                // Ziel-Artikel anzeigen
                 const targetId = link.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    targetElement.classList.add('active');
+                const targetArt = document.getElementById(targetId);
+                if (targetArt) {
+                    targetArt.style.display = 'block';
                 }
             });
         });
-        if (guides.length > 0) guides[0].classList.add('active');
+
+        // Den ersten Artikel beim Laden anzeigen
+        if (articles.length > 0) articles[0].style.display = 'block';
     });
 </script>
 </body>
