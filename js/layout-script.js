@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleButton.addEventListener('click', (e) => {
             e.preventDefault();
             const isRTL = mainContainer.classList.toggle('rtl-layout');
-            toggleButton.textContent = isRTL ? "Wechsel zu LTR" : "Layout spiegeln (RTL)";
+            toggleButton.textContent = isRTL ? "Schriftkultur links" : "Schriftkultur rechts";
             console.log("Layout-Modus geändert (QUELLE)");
         });
     }
