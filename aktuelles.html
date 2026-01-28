@@ -2,16 +2,12 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aktuelles | LUR-CH Fachverlag</title>
     <link rel="stylesheet" href="css/style.css"> 
 </head>
 <body>
-    
 <header>
-    <div class="brand-container">
-        <span id="brand-name">LUR-CH Fachverlag</span>
-    </div>
+    <div class="brand-container"><span id="brand-name">LUR-CH Fachverlag</span></div>
     <h1>Aktuelle Meldungen</h1>
     <nav id="main-nav">
         <ul>
@@ -34,52 +30,32 @@
             </ul>
         </div>
     </nav>
-    
     <section id="content-area">
-        <div class="tool-intro">
-            <strong>News-Ticker:</strong> Hier finden Sie die neuesten Entwicklungen rund um den LUR-CH Fachverlag.
-        </div>
-
         <article id="news1" class="guide-article">
             <h2>Eilmeldung: Die Hering-Invasion</h2>
-            <p>Aktuell warnt unser <strong>Administrator</strong> vor einer digitalen Hering-Invasion in den Serverräumen der Mine. Es wird geraten, die Fernwartung nur über gesicherte VPN-Tunnel zu starten.</p>
+            <p>Aktuell warnt unser <strong>Administrator</strong> vor einer digitalen Hering-Invasion...</p>
         </article>
-
         <article id="news2" class="guide-article">
             <h2>Besuchertag im Lurch-Gehege</h2>
-            <p>Nächste Woche begrüßt unser <strong>Chef-Ingenieur</strong> eine Gruppe von Fachbesuchern. Die <strong>Techniker</strong> bereiten bereits die Vorführungen der Panik-Buttons vor.</p>
+            <p>Nächste Woche begrüßt unser <strong>Chef-Ingenieur</strong> eine Gruppe...</p>
         </article>
     </section>
 </main>
 
-<footer>
-    <p>© 2026 – LUR-CH Fachverlag | <a href="impressum.html">Impressum</a></p>
-</footer>
+<footer><p>© 2026 – LUR-CH Fachverlag | <a href="impressum.html">Impressum</a></p></footer>
 
 <script src="js/layout-script.js"></script>
-
 <script>
-    // Lokale Navigation für die Info-Seite (News umschalten)
     document.addEventListener('DOMContentLoaded', () => {
-        const navLinks = document.querySelectorAll('.nav-trigger');
+        const triggers = document.querySelectorAll('.nav-trigger');
         const articles = document.querySelectorAll('.guide-article');
-
-        navLinks.forEach(link => {
+        triggers.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                // Alle News verstecken
-                articles.forEach(art => art.style.display = 'none');
-                
-                // Ziel-News anzeigen
-                const targetId = link.getAttribute('href').substring(1);
-                const targetArt = document.getElementById(targetId);
-                if (targetArt) {
-                    targetArt.style.display = 'block';
-                }
+                articles.forEach(a => a.style.display = 'none');
+                document.getElementById(link.getAttribute('href').substring(1)).style.display = 'block';
             });
         });
-
-        // Standardmäßig die erste News-Meldung anzeigen
         if (articles.length > 0) articles[0].style.display = 'block';
     });
 </script>

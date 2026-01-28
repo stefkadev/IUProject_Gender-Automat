@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
 <header>
     <div class="brand-container"><span id="brand-name">LUR-CH Fachverlag</span></div>
     <h1>Verlags-Archiv</h1>
@@ -26,56 +25,37 @@
         <div class="nav-card">
             <h3>Archiv-Themen</h3>
             <ul>
-                <li><a href="#anleitung1" class="nav-trigger">Verlagsgeschichte</a></li>
-                <li><a href="#anleitung2" class="nav-trigger">Alte Berichte</a></li>
+                <li><a href="#arch1" class="nav-trigger">Verlagsgeschichte</a></li>
+                <li><a href="#arch2" class="nav-trigger">Alte Berichte</a></li>
             </ul>
         </div>
     </nav>
-    
     <section id="content-area">
-        <div class="tool-intro">
-            <strong>Historische Bestände:</strong> Hier finden Sie digitalisierte Dokumente aus der Gründungszeit des Verlags.
-        </div>
-
-        <article id="anleitung1" class="guide-article">
+        <article id="arch1" class="guide-article">
             <h2>Archiv-Eintrag: Die Gründung der Lurch-Werke</h2>
-            <p>Als unser erster <strong>Herausgeber</strong> die Hallen des Verlags betrat, ahnte noch kein <strong>Mitarbeiter</strong>, dass wir einmal Marktführer für amphibische Fachliteratur werden würden. Jeder <strong>Archivar</strong> pflegt heute die Dokumente über die frühen Tage der Kohle-Hydrierung mit größter Sorgfalt.</p>
+            <p>Als unser erster <strong>Herausgeber</strong> die Hallen des Verlags betrat...</p>
         </article>
-
-        <article id="anleitung2" class="guide-article">
+        <article id="arch2" class="guide-article">
             <h2>Historische Wartungsberichte (1990er)</h2>
-            <p>In den 90ern musste jeder <strong>Techniker</strong> noch manuell die Lurch-Gehege kalibrieren. Ein <strong>Ingenieur</strong> jener Zeit berichtet, dass die Arbeit unter Tage besonders für <strong>Bergarbeiter</strong> riskant war.</p>
+            <p>In den 90ern musste jeder <strong>Techniker</strong> noch manuell die Gehege kalibrieren...</p>
         </article>
     </section>
 </main>
 
-<footer>
-    <p>© 2026 – LUR-CH Fachverlag | <a href="impressum.html">Impressum</a></p>
-</footer>
+<footer><p>© 2026 – LUR-CH Fachverlag | <a href="impressum.html">Impressum</a></p></footer>
 
 <script src="js/layout-script.js"></script>
-
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const navLinks = document.querySelectorAll('.nav-trigger');
+        const triggers = document.querySelectorAll('.nav-trigger');
         const articles = document.querySelectorAll('.guide-article');
-
-        navLinks.forEach(link => {
+        triggers.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                // Alle Artikel verstecken
                 articles.forEach(a => a.style.display = 'none');
-                
-                // Ziel-Artikel anzeigen
-                const targetId = link.getAttribute('href').substring(1);
-                const targetArt = document.getElementById(targetId);
-                if (targetArt) {
-                    targetArt.style.display = 'block';
-                }
+                document.getElementById(link.getAttribute('href').substring(1)).style.display = 'block';
             });
         });
-
-        // Den ersten Artikel beim Laden anzeigen
         if (articles.length > 0) articles[0].style.display = 'block';
     });
 </script>
