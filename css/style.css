@@ -73,20 +73,21 @@ main {
 /* --- Regel zur Umschaltung der Schriftkultur (RTL-Simulation) --- */
 
 @media screen and (min-width: 768px) {
-    /* Wir nutzen die Klasse .rtl-layout auf dem Haupt-Container oder Body */
-    body.rtl-layout main {
+    /* Wenn die Klasse .rtl-layout am main-Tag (layout-wrapper) aktiv ist */
+    main.layout-wrapper.rtl-layout {
         /* 1. Schritt: Spaltenbreiten im Grid tauschen */
         grid-template-columns: 1fr 250px; 
     }
 
-    /* 2. Schritt: Elemente physisch zuordnen */
+    /* 2. Schritt: Elemente über IDs physisch neu zuordnen (# statt .) */
+    
     /* Die Navigation soll in die zweite Spalte (rechts) */
-    body.rtl-layout .local-nav {
+    main.layout-wrapper.rtl-layout #local-nav {
         grid-column: 2;
     }
 
     /* Der Inhaltsbereich soll in die erste Spalte (links) */
-    body.rtl-layout .content-area {
+    main.layout-wrapper.rtl-layout #content-area {
         grid-column: 1;
     }
 }
