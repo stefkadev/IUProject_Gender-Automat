@@ -43,9 +43,9 @@
 
 <footer><p>© 2026 – LUR-CH Fachverlag</p></footer>
 
-<script src="layout-script.js"></script>
+<script src="js/layout-script.js"></script>
+
 <script>
-    // Kleines Hilfs-Skript nur für die Navigation auf dieser Seite
     document.addEventListener('DOMContentLoaded', () => {
         const navLinks = document.querySelectorAll('#local-nav a');
         const guides = document.querySelectorAll('.guide-content');
@@ -54,7 +54,10 @@
                 e.preventDefault();
                 guides.forEach(g => g.classList.remove('active'));
                 const targetId = link.getAttribute('href').substring(1);
-                document.getElementById(targetId).classList.add('active');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.classList.add('active');
+                }
             });
         });
         if (guides.length > 0) guides[0].classList.add('active');
