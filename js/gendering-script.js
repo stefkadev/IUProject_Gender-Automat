@@ -18,7 +18,6 @@ const GENDER_MAP = new Map([
     ["Techniker", "Techniker*in"],
     ["Ingenieur", "Ingenieur*in"],
     ["Verantwortlicher", "Verantwortliche*r"],
-    // Ergänzungen aus deinem Screenshot:
     ["Bergarbeiter", "Bergarbeiter*in"],
     ["Chef-Ingenieur", "Chef-Ingenieur*in"],
     ["Auftraggeber", "Auftraggeber*in"],
@@ -36,7 +35,7 @@ function applyGendering() {
     
     let rawText = contentArea.innerHTML; 
 
-    // 🛡️ SICHERHEITSSKRIPT: Entfernen von <script>-Tags (XSS-Schutz)
+    // SICHERHEITSSKRIPT: Entfernen von <script>-Tags (XSS-Schutz)
     const scriptRegex = /<script\b[^>]*>([\s\S]*?)<\/script>/gim;
     rawText = rawText.replace(scriptRegex, '');
 
@@ -61,6 +60,7 @@ function applyGendering() {
 
 // Event Listener Integration
 document.addEventListener('DOMContentLoaded', () => {
+    // Falls dein HTML <button id="toggle-button"> nutzt, hier anpassen:
     const genderingButton = document.getElementById('toggle-button'); 
     
     if (genderingButton) {
