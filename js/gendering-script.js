@@ -2,13 +2,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnNeutral = document.getElementById('btn-neutral');
     const btnMaskulin = document.getElementById('btn-maskulin');
 
+    // Wörterbuch für beide Richtungen
     const genderMap = {
         "Bergarbeiter": "Bergarbeitende",
         "Chef-Ingenieur": "Leitung der Ingenieurstechnik",
+        "Auftraggeber": "Auftraggebende Person",
         "Mitarbeiter": "Mitarbeitende",
         "Pfleger": "Pflegefachkräfte",
         "Techniker": "Technik-Team",
-        "Sicherheits-Beauftragte": "Sicherheits-Verantwortliche"
+        "Sicherheits-Beauftragte": "Sicherheits-Verantwortliche",
+        "Administrator": "System-Administration"
     };
 
     function updateButtonStyles(active) {
@@ -25,23 +28,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    btnNeutral.addEventListener('click', () => {
-        // Sucht nur im aktuell SICHTBAREN Artikel
+    // Funktion zum Ersetzen (funktioniert für beide Richtungen)
+    function transformText(toNeutral) {
         const activeArticle = document.querySelector('.guide-article[style*="display: block"]');
-        if (activeArticle) {
-            let html = activeArticle.innerHTML;
-            for (const [maskulin, neutral] of Object.entries(genderMap)) {
+        if (!activeArticle) return;
+
+        let html = activeArticle.innerHTML;
+        for (const [maskulin, neutral] of Object.entries(genderMap)) {
+            if (toNeutral) {
                 const regex = new RegExp(maskulin, 'g');
                 html = html.replace(regex, neutral);
+            } else {
+                const regex = new RegExp(neutral, 'g');
+                html = html.replace(regex, maskulin);
             }
-            activeArticle.innerHTML = html;
-            updateButtonStyles('neutral');
         }
+        activeArticle.innerHTML = html;
+    }
+
+    btnNeutral.addEventListener('click', () => {
+        transformText(true);
+        updateButtonStyles('neutral');
     });
 
     btnMaskulin.addEventListener('click', () => {
-        // Einfachste Lösung für "Original": Artikel-Inhalt zurücksetzen oder Seite neu laden
-        location.reload();
+        transformText(false);
+        updateButtonStyles('maskulin');
     });
 
     updateButtonStyles('maskulin');
