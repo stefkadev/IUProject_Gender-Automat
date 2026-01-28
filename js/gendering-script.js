@@ -22,6 +22,10 @@ const GENDER_MAP = new Map([
     ["Chef-Ingenieur", "Chef-Ingenieur*in"],
     ["Auftraggeber", "Auftraggeber*in"],
     ["Zuschauer", "Zuschauer*in"]
+    ["Pfleger", "Pfleger*in"],
+    ["Besucher", "Besucher*in"],
+    // Sonderversion
+    ["Ober-Lurch", "Ober-Lurch*in"]
 ]);
 
 // 4.2 Algorithmus und Implementierung des Scripts
