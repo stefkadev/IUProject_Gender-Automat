@@ -176,17 +176,19 @@ footer {
     }
 }
 
-/* --- 6. RTL-Spiegelung (Kulturelle Adaption) --- */
+/* --- 6. RTL-Spiegelung (Repariert: Kein Verspringen nach unten) --- */
 @media screen and (min-width: 768px) {
     main.layout-wrapper.rtl-layout {
-        grid-template-columns: 1fr 280px; /* Spalten tauschen */
+        grid-template-columns: 1fr 280px; 
     }
 
     main.layout-wrapper.rtl-layout #local-nav {
-        grid-column: 2; /* Nav nach rechts */
+        grid-column: 2;   
+        grid-row: 1;      
     }
 
     main.layout-wrapper.rtl-layout #content-area {
-        grid-column: 1; /* Content nach links */
+        grid-column: 1;   
+        grid-row: 1;      
     }
 }
