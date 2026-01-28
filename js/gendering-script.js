@@ -1,30 +1,32 @@
 /**
  * @file gendering-script.js
  * @client LUR-CH Fachverlag
- * @description Kernlogik zur automatisierten Textanpassung (jQuery-basiert)
+ * @description Kernlogik zur automatisierten Textanpassung mittels Gender-Stern (*)
  */
 
 // 4.1 Definition der Gendering-Regeln (Wörterbuch)
-// Die Map speichert die Regeln: Schlüssel (generisches Maskulinum) -> Wert (Gender-Doppelpunkt)
+// Die Map speichert die Regeln: Schlüssel (Maskulinum) -> Wert (Gender-Stern)
 const GENDER_MAP = new Map([
-    // Regeln, die auf die fiktiven Texte angewendet werden
-    ["Programmierer", "Programmierer:in"],
-    ["Benutzer", "Benutzer:in"],
-    ["Kunde", "Kunde:in"],
-    ["Entwickler", "Entwickler:in"],
-    ["Teilnehmer", "Teilnehmer:in"],
-    ["Mitarbeiter", "Mitarbeiter:in"],
-    ["Leser", "Leser:in"],
-    ["Administrator", "Administrator:in"],
-    ["Techniker", "Techniker:in"],
-    ["Ingenieur", "Ingenieur:in"],
-    ["Verantwortlicher", "Verantwortliche:r"]
+    ["Programmierer", "Programmierer*in"],
+    ["Benutzer", "Benutzer*in"],
+    ["Kunde", "Kund*in"],
+    ["Entwickler", "Entwickler*in"],
+    ["Teilnehmer", "Teilnehmer*in"],
+    ["Mitarbeiter", "Mitarbeiter*in"],
+    ["Leser", "Leser*in"],
+    ["Administrator", "Administrator*in"],
+    ["Techniker", "Techniker*in"],
+    ["Ingenieur", "Ingenieur*in"],
+    ["Verantwortlicher", "Verantwortliche*r"],
+    // Ergänzungen aus deinem Screenshot:
+    ["Bergarbeiter", "Bergarbeiter*in"],
+    ["Chef-Ingenieur", "Chef-Ingenieur*in"],
+    ["Auftraggeber", "Auftraggeber*in"],
+    ["Zuschauer", "Zuschauer*in"]
 ]);
 
 // 4.2 Algorithmus und Implementierung des Scripts
-// Hauptfunktion zur Suche und Ersetzung
 function applyGendering() {
-    // Abrufen des Ziel-Elements für die Textersetzung
     const contentArea = document.getElementById('content-area'); 
     
     if (!contentArea) {
@@ -34,44 +36,37 @@ function applyGendering() {
     
     let rawText = contentArea.innerHTML; 
 
-    // 🛡️ SICHERHEITSSKRIPT (KAPITEL 5): Entfernen aller <script>-Tags, um Code-Injektion (XSS) zu verhindern.
+    // 🛡️ SICHERHEITSSKRIPT: Entfernen von <script>-Tags (XSS-Schutz)
     const scriptRegex = /<script\b[^>]*>([\s\S]*?)<\/script>/gim;
     rawText = rawText.replace(scriptRegex, '');
-    console.log("Sicherheitscheck: Potentielle Skript-Tags wurden entfernt.");
 
-    // Iteration über alle Regeln im Wörterbuch (4.2 Verwendung von Regulären Ausdrücken)
+    // Iteration über alle Regeln im Wörterbuch
     for (const [masculine, gendered] of GENDER_MAP.entries()) {
-        
+        // \b sorgt dafür, dass nur ganze Wörter ersetzt werden (RegEx)
         const regex = new RegExp(`\\b${masculine}\\b`, 'gi'); 
         
-        // Ersetze alle Vorkommen im Text
         rawText = rawText.replace(regex, (match) => {
-            
-            // Logik zur Beibehaltung der Groß-/Kleinschreibung
-            if (match.charAt(0) === match.charAt(0).toUpperCase() && match.length > 0) {
+            // Beibehaltung der Groß-/Kleinschreibung (z.B. am Satzanfang)
+            if (match.charAt(0) === match.charAt(0).toUpperCase()) {
                 return gendered.charAt(0).toUpperCase() + gendered.slice(1);
             }
-            return gendered;
+            return gendered.toLowerCase();
         });
     }
 
-    // 4.3 Aktualisierung des Textes im Frontend
+    // 4.3 Aktualisierung des Frontends
     contentArea.innerHTML = rawText; 
-    console.log("Gendering-Prozess abgeschlossen und Frontend aktualisiert.");
+    console.log("Gendering mit Gender-Stern abgeschlossen.");
 }
 
-// 4.3 Integration des Scripts: Event Listener an den Button binden
+// Event Listener Integration
 document.addEventListener('DOMContentLoaded', () => {
-    // Button #toggle-button (aus Kap. 3.2) wird abgerufen und für die Gendering-Funktion belegt.
     const genderingButton = document.getElementById('toggle-button'); 
     
     if (genderingButton) {
-        genderingButton.addEventListener('click', (event) => {
-            event.preventDefault(); 
-            
+        genderingButton.addEventListener('click', (e) => {
+            e.preventDefault(); 
             applyGendering(); 
-            
-            // Nach der Ausführung: Button deaktivieren und Text aktualisieren
             genderingButton.textContent = "Gendering angewendet";
             genderingButton.disabled = true;
         });
