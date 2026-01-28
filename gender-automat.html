@@ -35,7 +35,7 @@
     
     <section id="content-area">
         <div class="tool-intro" style="margin-bottom: 20px; padding: 15px; border-left: 4px solid #004a99; background: #eef4fb; border-radius: 0 4px 4px 0;">
-            <strong>Tool-Modus:</strong> Wählen Sie links eine Anleitung und nutzen Sie die Buttons unten, um die inklusive Schreibweise zu testen.
+            <strong>Tool-Modus:</strong> Wählen Sie links eine Anleitung aus dem Menü, um den Text anzuzeigen. Nutzen Sie dann die Buttons unten für den Gender-Check.
         </div>
 
         <article id="anleitung1" class="guide-content">
@@ -72,26 +72,17 @@
         const navLinks = document.querySelectorAll('#local-nav a');
         const articles = document.querySelectorAll('.guide-content');
 
-        function showArticle(id) {
-            articles.forEach(art => art.classList.remove('active'));
-            const target = document.getElementById(id);
-            if (target) {
-                target.classList.add('active');
-            }
-        }
-
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
+                // Alle verstecken
+                articles.forEach(art => art.classList.remove('active'));
+                // Ziel anzeigen
                 const targetId = link.getAttribute('href').substring(1);
-                showArticle(targetId);
+                document.getElementById(targetId).classList.add('active');
             });
         });
-
-        // Zeige die erste Anleitung beim Start
-        if (articles.length > 0) articles[0].classList.add('active');
     });
 </script>
-        
 </body>
 </html>

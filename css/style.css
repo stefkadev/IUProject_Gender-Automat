@@ -1,109 +1,38 @@
-/* * Projekt: Gender-Automat
- * Organisation: LUR-CH Fachverlag
- * Beschreibung: Stylesheet für responsive technische Dokumentationen (QUELLE)
- */
+/* --- 1. Grund-Setup --- */
+body { font-family: sans-serif; margin: 0; line-height: 1.6; background: #f4f4f4; }
 
-/* --- 1. Globale Resets & Basis-Typografie --- */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+/* --- 2. Header & Nav --- */
+header { background: #004a99; color: white; padding: 1rem; }
+#main-nav ul { list-style: none; padding: 0; display: flex; gap: 15px; }
+#main-nav a { color: white; text-decoration: none; font-weight: bold; }
+
+/* --- 3. Layout (Grid) --- */
+.layout-wrapper {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+    min-height: 70vh;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f4;
-    color: #333;
-}
+/* --- 4. Content-Steuerung --- */
+.guide-content { display: none; background: white; padding: 20px; border-radius: 8px; }
+.guide-content.active { display: block; }
 
-/* --- 2. Header-Design (Blaues Corporate Design) --- */
-header {
-    background: #004a99; /* Kräftiges Blau */
-    color: #ffffff;
-    padding: 1.5em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5em;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-header h1 {
-    font-size: 1.4em;
-    text-align: center;
-}
-
-header h1 small {
-    font-size: 0.7em;
-    opacity: 0.8;
-}
-
-/* Hauptnavigation im Header (Weiß & Nebeneinander) */
-#main-nav ul {
-    list-style: none;
-    display: flex;         /* Richtet Links horizontal aus */
-    gap: 25px;             /* Abstand zwischen den Links */
-    padding: 0;
-}
-
-#main-nav a {
-    color: #ffffff;        /* Weiße Schriftfarbe */
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 0.95em;
-    transition: color 0.3s;
-}
-
-#main-nav a:hover {
-    color: #cce0ff;        /* Hellblau beim Drüberfahren */
-    text-decoration: underline;
-}
-
-/* Buttons im Header */
-header button {
-    padding: 8px 16px;
-    cursor: pointer;
-    background: #ffffff;
-    color: #004a99;
-    border: none;
-    border-radius: 4px;
-    font-weight: bold;
-    transition: background 0.3s;
-}
-
-header button:hover {
-    background: #e6e6e6;
-}
-
-/* --- 3. Content-Bereich & Single-Page Logik --- */
-main {
-    padding: 1em;
-    min-height: 80vh;
-}
-
-/* Steuerung der Sichtbarkeit der Texte */
-.guide-content {
-    display: none; /* Initial alle versteckt */
-}
-
-.guide-content.active {
-    display: block; /* Nur die aktive Anleitung anzeigen */
-    animation: fadeIn 0.5s;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* Gendering Buttons unter dem Text */
+/* --- 5. Sticky Gender-Buttons --- */
 .gender-controls {
-    margin-top: 2em;
-    padding-top: 1.5em;
-    border-top: 2px solid #ddd;
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    padding: 20px;
+    border-top: 2px solid #004a99;
     display: flex;
-    gap: 1em;
+    gap: 10px;
+    z-index: 1000;
+    margin-top: 30px;
+    box-shadow: 0 -5px 10px rgba(0,0,0,0.05);
 }
 
 .gender-controls button {
@@ -112,83 +41,16 @@ main {
     border: none;
     border-radius: 4px;
     font-weight: bold;
-    transition: transform 0.1s, background 0.3s;
+    transition: 0.3s;
 }
 
-#btn-neutral {
-    background-color: #004a99;
-    color: white;
-}
-
-#btn-maskulin {
-    background-color: #d1d1d1;
-    color: #333;
-}
-
-.gender-controls button:active {
-    transform: scale(0.98);
-}
-
-/* --- 4. Footer --- */
-footer {
-    background: #555;
-    color: #fff;
-    text-align: center;
-    padding: 1.5em;
-    font-size: 0.85em;
-}
-
-/* --- 5. Responsive Desktop-Layout (Zweispaltig) --- */
-@media screen and (min-width: 768px) {
-    header {
-        flex-direction: row;        /* Header-Elemente nebeneinander */
-        justify-content: space-between;
-        padding: 1em 3em;
-    }
-
-    main.layout-wrapper {
-        display: grid;
-        grid-template-columns: 280px 1fr; /* Links Nav, rechts Content */
-        gap: 2.5em;
-        padding: 3em;
-    }
-
-    #local-nav {
-        background: #fff;
-        padding: 1.5em;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        height: fit-content;
-    }
-
-    #local-nav ul {
-        list-style: none;
-    }
-
-    #local-nav li {
-        margin-bottom: 0.8em;
-    }
-
-    #local-nav a {
-        text-decoration: none;
-        color: #004a99;
-        font-weight: 500;
-    }
-}
-
-/* --- 6. RTL-Spiegelung (Repariert: Kein Verspringen nach unten) --- */
+/* --- 6. RTL-Reparatur (Kein Verspringen) --- */
 @media screen and (min-width: 768px) {
     main.layout-wrapper.rtl-layout {
         grid-template-columns: 1fr 280px; 
     }
-
-    main.layout-wrapper.rtl-layout #local-nav {
-        grid-column: 2;   
-        grid-row: 1;      
-    }
-
-    main.layout-wrapper.rtl-layout #content-area {
-        grid-column: 1;   
-        grid-row: 1;      
-    }
+    main.layout-wrapper.rtl-layout #local-nav { grid-column: 2; grid-row: 1; }
+    main.layout-wrapper.rtl-layout #content-area { grid-column: 1; grid-row: 1; }
 }
+
+footer { text-align: center; padding: 20px; background: #333; color: white; margin-top: 40px; }
