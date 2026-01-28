@@ -1,9 +1,79 @@
-<article id="anleitung1" class="guide-content">
-    <h2>Eilmeldung: Die Hering-Invasion</h2>
-    <p>Aktuell warnt unser*e <strong>Administrator*in</strong> vor einer digitalen Hering-Invasion in den Cloud-Systemen. Jede*r <strong>Benutzer*in</strong> wird gebeten, keine verdächtigen Fischanhänge zu öffnen. Die <strong>System-Entwickler*innen</strong> arbeiten bereits an einer Firewall.</p>
-</article>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aktuelles | LUR-CH Fachverlag</title>
+    <link rel="stylesheet" href="css/style.css"> 
+</head>
+<body>
+    
+<header>
+    <div class="brand-container">
+        <span id="brand-name">LUR-CH Fachverlag</span>
+    </div>
 
-<article id="anleitung2" class="guide-content">
-    <h2>Besuchertag im Lurch-Gehege</h2>
-    <p>Nächste Woche begrüßt unser*e <strong>Chef-Ingenieur*in</strong> eine Gruppe internationaler Gäste. Jede*r <strong>Besucher*in</strong> erhält eine exklusive Führung. Die <strong>Verantwortlichen</strong> für die Sicherheit weisen darauf hin, dass das Füttern der Lurche verboten ist.</p>
-</article>
+    <h1>Aktuelle Meldungen <small>(News-Feed)</small></h1>
+
+    <nav id="main-nav">
+        <ul>
+            <li><a href="index.html">Fachverlag-Home</a></li>
+            <li><a href="archiv.html">Archiv</a></li>
+            <li><a href="aktuelles.html">Aktuelles</a></li>
+        </ul>
+    </nav>
+
+    <button id="toggle-layout-btn">Layout spiegeln (RTL)</button>
+</header>
+
+<main class="layout-wrapper">
+    <nav id="local-nav">
+        <ul>
+            <li><a href="#news1">Hering-Invasion</a></li>
+            <li><a href="#news2">Besuchertag</a></li>
+        </ul>
+    </nav>
+    
+    <section id="content-area">
+        <article id="news1" class="guide-content">
+            <h2>Eilmeldung: Die Hering-Invasion</h2>
+            <p>Aktuell warnt unser*e <strong>Administrator*in</strong> vor einer digitalen Hering-Invasion in den Cloud-Systemen. Jede*r <strong>Benutzer*in</strong> wird gebeten, keine verdächtigen Fischanhänge zu öffnen. Die <strong>System-Entwickler*innen</strong> arbeiten bereits an einer Firewall.</p>
+        </article>
+
+        <article id="news2" class="guide-content">
+            <h2>Besuchertag im Lurch-Gehege</h2>
+            <p>Nächste Woche begrüßt unser*e <strong>Chef-Ingenieur*in</strong> eine Gruppe internationaler Gäste. Jede*r <strong>Besucher*in</strong> erhält eine exklusive Führung. Die <strong>Verantwortlichen</strong> für die Sicherheit weisen darauf hin, dass das Füttern der Lurche verboten ist.</p>
+        </article>
+    </section>
+</main>
+    
+<footer>
+    <p>© 2026 – LUR-CH Fachverlag</p>
+</footer>
+
+<script src="layout-script.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLinks = document.querySelectorAll('#local-nav a');
+        const guides = document.querySelectorAll('.guide-content');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                guides.forEach(g => g.classList.remove('active'));
+                const targetId = link.getAttribute('href').substring(1);
+                const targetGuide = document.getElementById(targetId);
+                if (targetGuide) {
+                    targetGuide.classList.add('active');
+                }
+            });
+        });
+
+        // Ersten News-Eintrag standardmäßig anzeigen
+        if (guides.length > 0) guides[0].classList.add('active');
+    });
+</script>
+        
+</body>
+</html>
