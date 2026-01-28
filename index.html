@@ -4,67 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LUR-CH Fachverlag | Gender-Automat</title>
-    <meta name="author" content="LUR-CH Fachverlag">
     <link rel="stylesheet" href="css/style.css"> 
 </head>
-
 <body>
     
 <header>
     <div class="brand-container">
         <span id="brand-name">LUR-CH Fachverlag</span>
     </div>
-
     <h1>Interaktiver Gender-Automat <small>(IPWA01-01)</small></h1>
-
-    <nav>
+    <nav id="main-nav">
         <ul>
             <li><a href="#">Startseite</a></li>
             <li><a href="#">Dokumentation</a></li>
         </ul>
     </nav>
-
-    <button id="toggle-button">Gendering anwenden</button>
     <button id="toggle-layout-btn">Layout spiegeln (RTL)</button>
 </header>
 
-    <main class="layout-wrapper">
-        
-        <nav id="local-nav">
-            <ul>
-                <li><a href="#anleitung1">Anleitung 1: Kohle-Hydrierung</a></li>
-                <li><a href="#anleitung2">Anleitung 2: Lurch-Management</a></li>
-                <li><a href="#anleitung3">Anleitung 3: Panik-Prävention</a></li>
-            </ul>
-        </nav>
-        
-        <section id="content-area">
-            <h2>Redaktions-Archiv: LUR-CH Fachverlag</h2>
-
-            <article id="anleitung1" class="guide-content">
-                <h2>Anleitung 1: Inbetriebnahme der Kohle-Anlage</h2>
-                <p>Jeder <strong>Bergarbeiter</strong> muss vor Schichtbeginn sicherstellen...</p>
-            </article>
-
-            <article id="anleitung2" class="guide-content">
-                <h2>Anleitung 2: Handhabung der Lurch-Bestände</h2>
-                <p>Der <strong>Mitarbeiter</strong> im Lurch-Gehege füttert...</p>
-            </article>
-
-            <article id="anleitung3" class="guide-content">
-                <h2>Anleitung 3: Wartung im Panik-Modus</h2>
-                <p>Für die Wartung der Panik-Buttons sind die <strong>Techniker</strong>...</p>
-            </article>
-        </section>
-    </main>
+<main class="layout-wrapper">
+    <nav id="local-nav">
+        <ul>
+            <li><a href="#anleitung1">Anleitung 1: Kohle-Hydrierung</a></li>
+            <li><a href="#anleitung2">Anleitung 2: Lurch-Management</a></li>
+            <li><a href="#anleitung3">Anleitung 3: Panik-Prävention</a></li>
+        </ul>
+    </nav>
     
-    <footer>
-        <p>© 2025 – Rechtliche Hinweise</p>
-    </footer>
+    <section id="content-area">
+        <article id="anleitung1" class="guide-content">
+            <h2>Anleitung 1: Inbetriebnahme der Kohle-Anlage</h2>
+            <p>Jeder <strong>Bergarbeiter</strong> muss vor Schichtbeginn sicherstellen, dass die Fackel brennt. Unser <strong>Chef-Ingenieur</strong> hat die Statik der Mine geprüft. Als <strong>Auftraggeber</strong> ist Herr Range persönlich für die Qualität der Kohle verantwortlich. Der <strong>Zuschauer</strong> (oder <strong>Leser</strong>) sollte während der Produktion nicht in die Lava springen.</p>
+        </article>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
-    <script src="layout-script.js"></script>
-    <script src="js/gendering-script.js"></script>
+        <article id="anleitung2" class="guide-content">
+            <h2>Anleitung 2: Handhabung der Lurch-Bestände</h2>
+            <p>Der <strong>Mitarbeiter</strong> im Lurch-Gehege füttert die Tiere täglich mit Keksen. Jeder <strong>Pfleger</strong> ist dazu angehalten, die Lurche nicht zu erschrecken. Nur der <strong>Ober-Lurch</strong> mit Admin-Rechten darf die Gehegetür öffnen. Die <strong>Besucher</strong> der Anlage werden gebeten, die Ruhe zu bewahren.</p>
+        </article>
+
+        <article id="anleitung3" class="guide-content">
+            <h2>Anleitung 3: Wartung im Panik-Modus</h2>
+            <p>Für die Wartung der Panik-Buttons sind die <strong>Techniker</strong> zuständig. Der <strong>Sicherheits-Beauftragte</strong> hat die Übersicht über alle Fluchtwege. Beachten Sie, dass jeder <strong>Administrator</strong> im Falle einer „Hering-Invasion" die Fernwartung aktivieren muss.</p>
+        </article>
+
+        <div class="gender-controls">
+            <button id="btn-neutral">Genderneutral</button>
+            <button id="btn-maskulin">Maskulin (Original)</button>
+        </div>
+    </section>
+</main>
+    
+<footer>
+    <p>© 2026 – LUR-CH Fachverlag (QUELLE)</p>
+</footer>
+
+<script src="js/gendering-script.js"></script>
+<script src="layout-script.js"></script>
         
 </body>
 </html>

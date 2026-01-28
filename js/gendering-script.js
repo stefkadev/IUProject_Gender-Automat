@@ -1,10 +1,3 @@
-/**
- * @file gendering-script.js
- * @client LUR-CH Fachverlag
- * @description Kernlogik zur automatisierten Textanpassung und Single-Page-Navigation
- */
-
-// 4.1 Definition der Gendering-Regeln (Wörterbuch)
 const GENDER_MAP = new Map([
     ["Programmierer", "Programmierer*in"],
     ["Benutzer", "Benutzer*in"],
@@ -26,79 +19,57 @@ const GENDER_MAP = new Map([
     ["Ober-Lurch", "Ober-Lurch*in"]  
 ]);
 
-// 4.2 Algorithmus und Implementierung des Scripts
-function applyGendering() {
-    const contentArea = document.getElementById('content-area'); 
-    
-    if (!contentArea) {
-        console.error("Content-Bereich nicht gefunden.");
-        return;
-    }
-    
-    let rawText = contentArea.innerHTML; 
+let originalStateMap = new Map(); // Speichert Originaltexte pro ID
 
-    // SICHERHEITSSKRIPT: Entfernen von <script>-Tags (XSS-Schutz nach Kap. 5)
-    const scriptRegex = /<script\b[^>]*>([\s\S]*?)<\/script>/gim;
-    rawText = rawText.replace(scriptRegex, '');
+function applyGendering(elementId) {
+    const container = document.getElementById(elementId);
+    if (!container) return;
 
-    // Iteration über alle Regeln im Wörterbuch
+    let text = container.innerHTML;
     for (const [masculine, gendered] of GENDER_MAP.entries()) {
-        // \b sorgt dafür, dass nur ganze Wörter ersetzt werden (RegEx)
-        const regex = new RegExp(`\\b${masculine}\\b`, 'gi'); 
-        
-        rawText = rawText.replace(regex, (match) => {
-            // Beibehaltung der Groß-/Kleinschreibung (z. B. am Satzanfang)
+        const regex = new RegExp(`\\b${masculine}\\b`, 'gi');
+        text = text.replace(regex, (match) => {
             if (match.charAt(0) === match.charAt(0).toUpperCase()) {
                 return gendered.charAt(0).toUpperCase() + gendered.slice(1);
             }
             return gendered.toLowerCase();
         });
     }
-
-    // 4.3 Aktualisierung des Frontends
-    contentArea.innerHTML = rawText; 
-    console.log("Gendering mit Gender-Stern abgeschlossen.");
+    container.innerHTML = text;
 }
 
-// Zentrales Event-Management
 document.addEventListener('DOMContentLoaded', () => {
-    
-    /* --- Gendering Funktionalität --- */
-    const genderingButton = document.getElementById('toggle-button'); 
-    
-    if (genderingButton) {
-        genderingButton.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            applyGendering(); 
-            genderingButton.textContent = "Gendering angewendet";
-            genderingButton.disabled = true; // Verhindert Mehrfachanwendung
-        });
-    }
-
-    /* --- Single-Page-Navigation (Anleitungen ein/ausblenden) --- */
-    const navLinks = document.querySelectorAll('#local-nav a');
     const guides = document.querySelectorAll('.guide-content');
+    
+    // 1. Originalzustände sichern
+    guides.forEach(guide => {
+        originalStateMap.set(guide.id, guide.innerHTML);
+    });
 
-    if (navLinks.length > 0 && guides.length > 0) {
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                // Alle Anleitungen verstecken
-                guides.forEach(g => g.classList.remove('active'));
-                
-                // Ziel-ID aus href extrahieren und anzeigen
-                const targetId = link.getAttribute('href').substring(1);
-                const targetGuide = document.getElementById(targetId);
-                
-                if (targetGuide) {
-                    targetGuide.classList.add('active');
-                    console.log(`Navigation zu: ${targetId}`);
-                }
-            });
+    // 2. Navigation
+    const navLinks = document.querySelectorAll('#local-nav a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            guides.forEach(g => g.classList.remove('active'));
+            const targetId = link.getAttribute('href').substring(1);
+            document.getElementById(targetId).classList.add('active');
         });
+    });
 
-        // Standard-Ansicht: Erste Anleitung aktivieren
-        guides[0].classList.add('active');
-    }
+    // 3. Gendering Buttons
+    document.getElementById('btn-neutral').addEventListener('click', () => {
+        const activeGuide = document.querySelector('.guide-content.active');
+        if (activeGuide) applyGendering(activeGuide.id);
+    });
+
+    document.getElementById('btn-maskulin').addEventListener('click', () => {
+        const activeGuide = document.querySelector('.guide-content.active');
+        if (activeGuide) {
+            activeGuide.innerHTML = originalStateMap.get(activeGuide.id);
+        }
+    });
+
+    // Initialanzeige
+    if (guides.length > 0) guides[0].classList.add('active');
 });
