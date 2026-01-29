@@ -1,6 +1,6 @@
 /* --- 1. Grund-Setup --- */
 html {
-    /* Erzwingt Scrollbar-Fläche, um horizontales Wackeln zu verhindern */
+    /* Verhindert seitliches Wackeln durch die Scrollbar */
     overflow-y: scroll; 
 }
 
@@ -50,25 +50,34 @@ header {
     color: #ffd700; 
 }
 
-/* --- 3. Layout (Grid) --- */
+/* --- 3. Layout (Grid) - FIXED MIT AREAS --- */
 .layout-wrapper {
     display: grid;
-    /* Standard: Sidebar links (280px), Content rechts (1fr) */
+    /* Wir definieren feste Bereiche: 'side' und 'main' */
+    grid-template-areas: "side main";
     grid-template-columns: 280px 1fr;
     gap: 30px;
     max-width: 1200px;
     margin: 30px auto;
     padding: 0 20px;
     
-    /* FIX: Verhindert das Springen beim Spaltenwechsel */
+    /* Zwingt die Boxen, oben zu bleiben */
     align-items: start; 
-    min-height: 800px; 
-    
-    transition: grid-template-columns 0.3s ease;
+    min-height: 850px; 
+}
+
+/* Zuweisung der IDs zu den Bereichen */
+#local-nav { 
+    grid-area: side; 
+}
+
+#content-area { 
+    grid-area: main; 
+    min-height: 600px;
 }
 
 /* --- 4. Content & Karten-Optik --- */
-.nav-card, #local-nav { 
+.nav-card { 
     background: white; 
     padding: 20px; 
     border-radius: 10px; 
@@ -76,23 +85,15 @@ header {
     height: fit-content;
 }
 
-#content-area {
-    /* Stabiler Anker für den Inhalt */
-    min-height: 600px;
-}
-
 .guide-article { 
     background: white; 
     padding: 30px; 
     border-radius: 10px; 
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    /* Reserviert Platz für Gendering-Texte */
     min-height: 450px; 
-    overflow-anchor: none;
     box-sizing: border-box;
 }
 
-/* Verhindert Zeilenumbruch bei Gender-Sternchen */
 strong {
     white-space: nowrap; 
 }
@@ -103,7 +104,6 @@ strong {
     padding: 20px; 
     border-radius: 5px; 
     margin-bottom: 25px;
-    min-height: 60px;
 }
 
 /* --- 5. Gender-Buttons --- */
@@ -118,7 +118,6 @@ strong {
     gap: 15px;
     z-index: 1000;
     margin-top: 30px;
-    box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
 }
 
 .gender-controls button { 
@@ -130,14 +129,13 @@ strong {
     transition: 0.3s; 
 }
 
-/* --- 6. RTL-Logik --- */
+/* --- 6. RTL-Logik - TAUSCH DER AREAS --- */
 @media screen and (min-width: 768px) {
-    /* Klasse wird via JS dem .layout-wrapper hinzugefügt */
     .layout-wrapper.rtl-layout { 
+        /* Hier tauschen wir einfach nur die Position der benannten Bereiche */
+        grid-template-areas: "main side";
         grid-template-columns: 1fr 280px; 
     }
-    .layout-wrapper.rtl-layout #local-nav { grid-column: 2; }
-    .layout-wrapper.rtl-layout #content-area { grid-column: 1; }
 }
 
 /* --- 7. Footer --- */
@@ -149,38 +147,18 @@ footer {
     margin-top: 50px; 
 }
 
-/* --- 8. Responsivität (Mobile Ansicht) --- */
+/* --- 8. Responsivität --- */
 @media screen and (max-width: 768px) {
     .layout-wrapper { 
+        grid-template-areas: 
+            "side"
+            "main";
         grid-template-columns: 1fr; 
-        margin: 10px auto;
-        gap: 15px;
         min-height: auto;
     }
-
-    #local-nav { order: -1; }
-
-    header { 
+    header, .header-controls, #main-nav ul { 
         flex-direction: column; 
-        gap: 15px; 
-        text-align: center;
-    }
-
-    .header-controls { 
-        flex-direction: column; 
+        align-items: center;
         gap: 10px; 
-        margin-left: 0; 
-    }
-
-    #main-nav ul { 
-        flex-direction: column; 
-        gap: 10px;
-        align-items: center; 
-    }
-
-    .gender-controls {
-        position: relative; 
-        flex-direction: column;
-        bottom: 0;
     }
 }
