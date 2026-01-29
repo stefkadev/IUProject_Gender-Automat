@@ -5,13 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aktuelles | LUR-CH Fachverlag</title>
 
-    
     <link rel="stylesheet" href="css/style.css"> 
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
     <script src="js/layout-script.js" defer></script>
     <script src="js/gendering-script.js" defer></script>
+
+    <style>
+        /* Spezifische Layout-Sicherung für Aktuelles */
+        #content-area {
+            min-height: 600px; /* Verhindert das Springen des Footers */
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -23,7 +28,7 @@
                 <li><a href="index.html">Fachverlag-Home</a></li>
                 <li><a href="gender-automat.html">Gender-Automat</a></li>
                 <li><a href="archiv.html">Archiv</a></li>
-                <li><a href="aktuelles.html">Aktuelles</a></li>
+                <li><a href="aktuelles.html" class="active">Aktuelles</a></li>
             </ul>
         </nav>
         <button id="toggle-layout-btn">Schriftkultur rechts (RTL)</button>
@@ -31,14 +36,16 @@
 </header>
 
 <main class="layout-wrapper"> 
-    <nav id="local-nav">
+    <aside id="local-nav">
         <div class="nav-card">
+            <h3>News-Themen</h3>
             <ul>
                 <li><a href="#news1" class="nav-trigger">Hering-Invasion</a></li>
                 <li><a href="#news2" class="nav-trigger">Besuchertag</a></li>
             </ul>
         </div>
-    </nav>
+    </aside>
+
     <section id="content-area">
         <article id="news1" class="guide-article">
             <h2>Eilmeldung: Die Hering-Invasion</h2>
@@ -53,19 +60,26 @@
 
 <footer><p>© 2026 – LUR-CH Fachverlag | <a href="impressum.html">Impressum</a></p></footer>
 
-<script src="js/layout-script.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const triggers = document.querySelectorAll('.nav-trigger');
-        const articles = document.querySelectorAll('.guide-article');
-        triggers.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                articles.forEach(a => a.style.display = 'none');
-                document.getElementById(link.getAttribute('href').substring(1)).style.display = 'block';
-            });
+    $(document).ready(function() {
+        const $articles = $('.guide-article');
+        const $triggers = $('.nav-trigger');
+
+        // Initialzustand: Nur den ersten Artikel zeigen
+        $articles.hide();
+        $articles.first().show();
+
+        $triggers.on('click', function(e) {
+            e.preventDefault();
+            
+            // Verhindert "Gezappel" bei schnellen Klicks
+            $articles.stop(true, true).hide();
+            
+            const targetId = $(this).attr('href');
+            $(targetId).fadeIn(400); 
+            
+            console.log("News-Beitrag gewechselt");
         });
-        if (articles.length > 0) articles[0].style.display = 'block';
     });
 </script>
 </body>
