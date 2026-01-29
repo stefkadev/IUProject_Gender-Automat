@@ -1,4 +1,9 @@
 /* --- 1. Grund-Setup --- */
+html {
+    /* Verhindert seitliches Springen durch dauerhafte Scrollbar-Fläche */
+    overflow-y: scroll; 
+}
+
 body { 
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
     margin: 0; 
@@ -21,7 +26,7 @@ header {
     display: flex;
     align-items: center;
     gap: 30px; 
-    margin-left: auto; /
+    margin-left: auto; 
 }
 
 #main-nav ul { 
@@ -53,8 +58,10 @@ header {
     max-width: 1200px;
     margin: 30px auto;
     padding: 0 20px;
-    min-height: 60vh;
-    transition: all 0.3s ease;
+    /* Erhöhte min-height für absolute Stabilität bei RTL-Wechsel */
+    min-height: 750px; 
+    align-items: start; 
+    transition: grid-template-columns 0.3s ease;
 }
 
 /* --- 4. Content & Karten-Optik --- */
@@ -66,31 +73,30 @@ header {
     height: fit-content;
 }
 
-.guide-article { 
+.guide-article, .tool-intro { 
     background: white; 
     padding: 30px; 
     border-radius: 10px; 
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    /* Fix gegen Springen des Footers beim Gendern */
-    min-height: 450px; 
+    /* Reserviert Platz für dynamische Inhalte */
+    min-height: 500px; 
     overflow-anchor: none;
+    box-sizing: border-box;
 }
 
-/* Verhindert, dass Wörter wie "Mitarbeiter*innen" umbrechen */
+.tool-intro {
+    background: #eef4fb; 
+    border-left: 5px solid #004a99;
+    min-height: auto; /* Intro darf kleiner sein, da Wrapper min-height hält */
+}
+
+/* Verhindert Zeilenumbruch bei Gendering-Sternchen */
 strong {
     white-space: nowrap; 
 }
 
 .gender-automat-page .guide-article {
     display: none;
-}
-
-.tool-intro { 
-    background: #eef4fb; 
-    border-left: 5px solid #004a99; 
-    padding: 20px; 
-    border-radius: 5px; 
-    margin-bottom: 25px; 
 }
 
 /* --- 5. Gender-Buttons --- */
@@ -141,11 +147,10 @@ footer {
         grid-template-columns: 1fr; 
         margin: 10px auto;
         gap: 15px;
+        min-height: auto;
     }
 
-    #local-nav { 
-        order: -1; 
-    }
+    #local-nav { order: -1; }
 
     header { 
         flex-direction: column; 
