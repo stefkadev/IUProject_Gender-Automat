@@ -13,8 +13,22 @@
     <script src="js/gendering-script.js" defer></script>
 
     <style>
-        /* Initialzustand: Buttons im Automaten-Modus verstecken */
-        .gender-controls { display: none; }
+        
+        #content-area {
+            min-height: 600px; 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gender-controls { 
+            display: none; 
+            margin-top: auto; 
+            padding-top: 30px;
+        }
+
+        .guide-article {
+            overflow: hidden;
+        }
     </style>
 </head>
 <body class="gender-automat-page"> 
@@ -25,7 +39,7 @@
         <nav id="main-nav">
             <ul>
                 <li><a href="index.html">Fachverlag-Home</a></li>
-                <li><a href="gender-automat.html">Gender-Automat</a></li>
+                <li><a href="gender-automat.html" class="active">Gender-Automat</a></li>
                 <li><a href="archiv.html">Archiv</a></li>
                 <li><a href="aktuelles.html">Aktuelles</a></li>
             </ul>
@@ -78,23 +92,22 @@
         const $articles = $('.guide-article');
         const $controls = $('#controls');
         const $intro = $('.tool-intro');
+        const $contentArea = $('#content-area');
 
-        // Initialzustand: Alles aus
         $articles.hide();
 
         $('.nav-trigger').on('click', function(e) {
             e.preventDefault();
             
-            // 1. Alle Artikel verstecken
-            $articles.hide();
+            // Verhindert ruckartige Bewegungen während der Animation
+            $articles.stop(true, true).hide();
             
-            // 2. Gewählten Artikel sanft einblenden
             const target = $(this).attr('href');
-            $(target).fadeIn(400); // jQuery Animation (QUELLE)
             
-            // 3. Intro ausblenden, Controls einblenden
-            $intro.fadeOut(200);
-            $controls.fadeIn(400).css('display', 'flex');
+            $intro.fadeOut(200, function() {
+                $(target).fadeIn(400);
+                $controls.fadeIn(400).css('display', 'flex');
+            });
         });
     });
 </script>

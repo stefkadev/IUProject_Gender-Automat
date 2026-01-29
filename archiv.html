@@ -8,8 +8,18 @@
     <link rel="stylesheet" href="css/style.css">
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
     <script src="js/layout-script.js" defer></script>
+
+    <style>
+
+        #content-area {
+            min-height: 500px; 
+        }
+
+        .guide-article {
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -20,7 +30,7 @@
             <ul>
                 <li><a href="index.html">Fachverlag-Home</a></li>
                 <li><a href="gender-automat.html">Gender-Automat</a></li>
-                <li><a href="archiv.html">Archiv</a></li>
+                <li><a href="archiv.html" class="active">Archiv</a></li>
                 <li><a href="aktuelles.html">Aktuelles</a></li>
             </ul>
         </nav>
@@ -58,17 +68,16 @@
         const $articles = $('.guide-article');
         const $triggers = $('.nav-trigger');
 
-        // Ersten Artikel initial anzeigen
         $articles.hide();
         $articles.first().show();
 
         $triggers.on('click', function(e) {
             e.preventDefault();
             
-            // Framework-Methoden: Verstecken und Einblenden mit Animation
-            $articles.hide();
+            $articles.stop(true, true).hide();
+            
             const targetId = $(this).attr('href');
-            $(targetId).fadeIn(300); // Schöner Übergang (QUELLE)
+            $(targetId).fadeIn(400); 
             
             console.log("Archiv-Inhalt gewechselt via jQuery");
         });
