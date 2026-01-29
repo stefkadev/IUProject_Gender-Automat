@@ -1,6 +1,6 @@
 /* --- 1. Grund-Setup --- */
 html {
-    /* Verhindert seitliches Springen durch dauerhafte Scrollbar-Fläche */
+    /* Erzwingt Scrollbar-Fläche, um horizontales Wackeln zu verhindern */
     overflow-y: scroll; 
 }
 
@@ -53,14 +53,17 @@ header {
 /* --- 3. Layout (Grid) --- */
 .layout-wrapper {
     display: grid;
+    /* Standard: Sidebar links (280px), Content rechts (1fr) */
     grid-template-columns: 280px 1fr;
     gap: 30px;
     max-width: 1200px;
     margin: 30px auto;
     padding: 0 20px;
-    /* Erhöhte min-height für absolute Stabilität bei RTL-Wechsel */
-    min-height: 750px; 
+    
+    /* FIX: Verhindert das Springen beim Spaltenwechsel */
     align-items: start; 
+    min-height: 800px; 
+    
     transition: grid-template-columns 0.3s ease;
 }
 
@@ -73,30 +76,34 @@ header {
     height: fit-content;
 }
 
-.guide-article, .tool-intro { 
+#content-area {
+    /* Stabiler Anker für den Inhalt */
+    min-height: 600px;
+}
+
+.guide-article { 
     background: white; 
     padding: 30px; 
     border-radius: 10px; 
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    /* Reserviert Platz für dynamische Inhalte */
-    min-height: 500px; 
+    /* Reserviert Platz für Gendering-Texte */
+    min-height: 450px; 
     overflow-anchor: none;
     box-sizing: border-box;
 }
 
-.tool-intro {
-    background: #eef4fb; 
-    border-left: 5px solid #004a99;
-    min-height: auto; /* Intro darf kleiner sein, da Wrapper min-height hält */
-}
-
-/* Verhindert Zeilenumbruch bei Gendering-Sternchen */
+/* Verhindert Zeilenumbruch bei Gender-Sternchen */
 strong {
     white-space: nowrap; 
 }
 
-.gender-automat-page .guide-article {
-    display: none;
+.tool-intro { 
+    background: #eef4fb; 
+    border-left: 5px solid #004a99; 
+    padding: 20px; 
+    border-radius: 5px; 
+    margin-bottom: 25px;
+    min-height: 60px;
 }
 
 /* --- 5. Gender-Buttons --- */
@@ -125,6 +132,7 @@ strong {
 
 /* --- 6. RTL-Logik --- */
 @media screen and (min-width: 768px) {
+    /* Klasse wird via JS dem .layout-wrapper hinzugefügt */
     .layout-wrapper.rtl-layout { 
         grid-template-columns: 1fr 280px; 
     }
