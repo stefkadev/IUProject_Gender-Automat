@@ -12,10 +12,12 @@
     <script src="js/gendering-script.js" defer></script>
 
     <style>
-        /* Spezifische Layout-Sicherung für Aktuelles */
+        /* Stabilisiert den Inhaltsbereich während der Wechsel */
         #content-area {
-            min-height: 600px; /* Verhindert das Springen des Footers */
+            min-height: 600px;
         }
+        /* Initialzustand: Artikel verstecken */
+        .guide-article { display: none; }
     </style>
 </head>
 <body>
@@ -47,13 +49,18 @@
     </aside>
 
     <section id="content-area">
+        <div class="tool-intro" id="news-welcome">
+            Dies sind die aktuellen Nachrichten bei LUR-CH Fachverlag. Bitte wählen Sie links ein Thema aus.
+        </div>
+
         <article id="news1" class="guide-article">
             <h2>Eilmeldung: Die Hering-Invasion</h2>
-            <p>Aktuell warnt unser <strong>Administrator</strong> vor einer digitalen Hering-Invasion...</p>
+            <p>Aktuell warnt unser <strong>Administrator</strong> vor einer digitalen Hering-Invasion, die unsere Server mit Fisch-Memes flutet...</p>
         </article>
+        
         <article id="news2" class="guide-article">
             <h2>Besuchertag im Lurch-Gehege</h2>
-            <p>Nächste Woche begrüßt unser <strong>Chef-Ingenieur</strong> eine Gruppe...</p>
+            <p>Nächste Woche begrüßt unser <strong>Chef-Ingenieur</strong> eine Gruppe von Ehrengästen zur Fütterung der Riesenlurche...</p>
         </article>
     </section>
 </main>
@@ -64,21 +71,22 @@
     $(document).ready(function() {
         const $articles = $('.guide-article');
         const $triggers = $('.nav-trigger');
-
-        // Initialzustand: Nur den ersten Artikel zeigen
-        $articles.hide();
-        $articles.first().show();
+        const $welcome = $('#news-welcome');
 
         $triggers.on('click', function(e) {
             e.preventDefault();
             
-            // Verhindert "Gezappel" bei schnellen Klicks
+            // 1. Willkommens-Info ausblenden
+            $welcome.fadeOut(200);
+            
+            // 2. Alle anderen Artikel verstecken
             $articles.stop(true, true).hide();
             
+            // 3. Den gewählten Artikel anzeigen
             const targetId = $(this).attr('href');
             $(targetId).fadeIn(400); 
             
-            console.log("News-Beitrag gewechselt");
+            console.log("Nachricht geladen: " + targetId);
         });
     });
 </script>
