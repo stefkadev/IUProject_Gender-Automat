@@ -1,6 +1,5 @@
 /* --- 1. Grund-Setup --- */
 html {
-    /* Verhindert seitliches Wackeln durch die Scrollbar */
     overflow-y: scroll; 
 }
 
@@ -50,10 +49,9 @@ header {
     color: #ffd700; 
 }
 
-/* --- 3. Layout (Grid) - FIXED MIT AREAS --- */
+/* --- 3. Layout (Grid) --- */
 .layout-wrapper {
     display: grid;
-    /* Wir definieren feste Bereiche: 'side' und 'main' */
     grid-template-areas: "side main";
     grid-template-columns: 280px 1fr;
     gap: 30px;
@@ -61,7 +59,6 @@ header {
     margin: 30px auto;
     padding: 0 20px;
     
-    /* Zwingt die Boxen, oben zu bleiben */
     align-items: start; 
     min-height: 850px; 
 }
@@ -132,7 +129,6 @@ strong {
 /* --- 6. RTL-Logik - TAUSCH DER AREAS --- */
 @media screen and (min-width: 768px) {
     .layout-wrapper.rtl-layout { 
-        /* Hier tauschen wir einfach nur die Position der benannten Bereiche */
         grid-template-areas: "main side";
         grid-template-columns: 1fr 280px; 
     }

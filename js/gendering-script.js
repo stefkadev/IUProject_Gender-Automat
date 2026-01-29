@@ -3,7 +3,7 @@ $(document).ready(function() {
     const $btnNeutral = $('#btn-neutral');
     const $btnMaskulin = $('#btn-maskulin');
 
-    // Deine vollständige Liste (nichts geht verloren!)
+    
     const genderMap = {
         "Bergarbeiter": "Bergarbeiter*innen",
         "Chef-Ingenieur": "Chef-Ingenieur*innen",
@@ -33,7 +33,7 @@ $(document).ready(function() {
         // Gezielte Suche nach <strong> Tags innerhalb des Artikels
         $activeArticle.find('strong').each(function() {
             let $term = $(this);
-            let currentText = $term.text(); // Entspricht .textContent (Sicher gegen XSS!)
+            let currentText = $term.text();
 
             for (const [maskulin, neutral] of Object.entries(genderMap)) {
                 if (toNeutral && currentText === maskulin) {
