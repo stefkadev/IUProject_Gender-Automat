@@ -17,6 +17,14 @@ header {
     align-items: center; 
 }
 
+/* Gruppiert Nav und Button rechts */
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 30px; 
+    margin-left: auto; /* Sorgt dafür, dass die Gruppe immer nach rechts rückt */
+}
+
 #main-nav ul { 
     list-style: none; 
     padding: 0; 
@@ -31,11 +39,6 @@ header {
     font-size: 0.95rem; 
 }
 
-#main-nav a:hover { 
-    text-decoration: underline; 
-}
-
-/* Markierung für die aktuelle Seite */
 #main-nav a.active {
     text-decoration: underline;
     text-underline-offset: 8px; 
@@ -46,13 +49,13 @@ header {
 /* --- 3. Layout (Grid) --- */
 .layout-wrapper {
     display: grid;
-    grid-template-columns: 280px 1fr; /* Standard: Nav links, Content rechts */
+    grid-template-columns: 280px 1fr;
     gap: 30px;
     max-width: 1200px;
     margin: 30px auto;
     padding: 0 20px;
     min-height: 60vh;
-    transition: all 0.3s ease; /* Ermöglicht sanftes Umschalten */
+    transition: all 0.3s ease;
 }
 
 /* --- 4. Content & Karten-Optik --- */
@@ -64,19 +67,21 @@ header {
     height: fit-content;
 }
 
-.nav-card ul { list-style: none; padding: 0; }
-.nav-card li { margin-bottom: 10px; }
-.nav-card a { color: #004a99; text-decoration: none; font-weight: 600; }
-
 .guide-article { 
     background: white; 
     padding: 30px; 
     border-radius: 10px; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    /* Fix gegen Springen des Footers beim Gendern */
+    min-height: 450px; 
+    overflow-anchor: none;
 }
 
-/* WICHTIG: Standardmäßig ausgeblendet für den Automaten, 
-   aber via JS oder inline-style sichtbar gemacht */
+/* Verhindert, dass Wörter wie "Mitarbeiter*innen" umbrechen */
+strong {
+    white-space: nowrap; 
+}
+
 .gender-automat-page .guide-article {
     display: none;
 }
@@ -113,20 +118,13 @@ header {
     transition: 0.3s; 
 }
 
-/* --- 6. RTL-Logik (Repariert) --- */
+/* --- 6. RTL-Logik --- */
 @media screen and (min-width: 768px) {
-    /* Wenn die Klasse .rtl-layout aktiv ist, tauschen wir die Spalten */
     .layout-wrapper.rtl-layout { 
         grid-template-columns: 1fr 280px; 
     }
-    
-    .layout-wrapper.rtl-layout #local-nav { 
-        grid-column: 2; 
-    }
-    
-    .layout-wrapper.rtl-layout #content-area { 
-        grid-column: 1; 
-    }
+    .layout-wrapper.rtl-layout #local-nav { grid-column: 2; }
+    .layout-wrapper.rtl-layout #content-area { grid-column: 1; }
 }
 
 /* --- 7. Footer --- */
@@ -138,39 +136,5 @@ footer {
     margin-top: 50px; 
 }
 
-footer a { color: #ccc; text-decoration: none; font-size: 0.9rem; }
-
-/* --- 8. Responsivität (Mobile Ansicht) --- */
+/* --- 8. Responsivität --- */
 @media screen and (max-width: 768px) {
-    .layout-wrapper {
-        grid-template-columns: 1fr; 
-        margin: 10px auto;
-        gap: 15px;
-    }
-
-    #local-nav {
-        order: -1; /* Nav erscheint mobil oben */
-    }
-
-    header {
-        flex-direction: column; 
-        text-align: center;
-        gap: 15px;
-    }
-
-    #main-nav ul {
-        flex-direction: column; 
-        gap: 10px;
-        align-items: center;
-    }
-
-    .gender-controls {
-        position: relative; 
-        flex-direction: column;
-        bottom: 0;
-    }
-    
-    #toggle-layout-btn {
-        width: 100%;
-    }
-}

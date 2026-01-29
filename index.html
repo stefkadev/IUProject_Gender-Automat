@@ -8,17 +8,17 @@
     <link rel="stylesheet" href="css/style.css">
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="js/layout-script.js" defer></script>
     
     <style>
-        /* Spezial-Anpassung für die Home-Seite ohne Menü */
-        .full-width-content {
-            grid-template-columns: 1fr !important; /* Nur eine Spalte */
+        /* Nur für die Home-Seite: Das Grid auf eine volle Spalte zwingen */
+        .layout-wrapper {
+            grid-template-columns: 1fr !important;
+            max-width: 900px; /* Optional: Text nicht zu breit laufen lassen */
         }
-        /* Damit der RTL-Button trotzdem einen Effekt hat, spiegeln wir den Textfluss */
-        .rtl-layout {
-            direction: rtl;
-            text-align: right;
+        
+        /* Den Artikel hier explizit anzeigen, da er im CSS global auf 'none' steht */
+        .guide-article {
+            display: block !important;
         }
     </style>
 </head>
@@ -34,12 +34,11 @@
             <li><a href="aktuelles.html">Aktuelles</a></li>
         </ul>
     </nav>
-    <button id="toggle-layout-btn">Schriftkultur rechts (RTL)</button>
-</header>
+    </header>
 
-<main class="layout-wrapper full-width-content">
+<main class="layout-wrapper">
     <section id="content-area">
-        <article class="guide-article" style="display: block;">
+        <article class="guide-article">
             <h2>Ihr Partner für Fachpublikationen</h2>
             <p>Der LUR-CH Fachverlag steht für Präzision in der technischen Dokumentation. Besuchen Sie unser neues Tool, den <strong>Gender-Automaten</strong>, um Texte barrierefrei und inklusiv zu gestalten.</p>
             <a href="gender-automat.html" class="cta-button" style="display: inline-block; background: #004a99; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Zum Gender-Automaten</a>
