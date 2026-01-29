@@ -1,40 +1,95 @@
 /* --- 1. Grund-Setup --- */
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; line-height: 1.6; background: #f4f7f9; color: #333; }
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    margin: 0; 
+    line-height: 1.6; 
+    background: #f4f7f9; 
+    color: #333; 
+}
 
 /* --- 2. Header & Nav --- */
-header { background: #004a99; color: white; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; }
-#main-nav ul { list-style: none; padding: 0; display: flex; gap: 20px; }
-#main-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 0.95rem; }
-#main-nav a:hover { text-decoration: underline; }
+header { 
+    background: #004a99; 
+    color: white; 
+    padding: 1rem 5%; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+#main-nav ul { 
+    list-style: none; 
+    padding: 0; 
+    display: flex; 
+    gap: 20px; 
+}
+
+#main-nav a { 
+    color: white; 
+    text-decoration: none; 
+    font-weight: bold; 
+    font-size: 0.95rem; 
+}
+
+#main-nav a:hover { 
+    text-decoration: underline; 
+}
+
+/* Markierung für die aktuelle Seite */
+#main-nav a.active {
+    text-decoration: underline;
+    text-underline-offset: 8px; 
+    text-decoration-thickness: 3px; 
+    color: #ffd700; 
+}
 
 /* --- 3. Layout (Grid) --- */
 .layout-wrapper {
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: 280px 1fr; /* Standard: Nav links, Content rechts */
     gap: 30px;
     max-width: 1200px;
     margin: 30px auto;
     padding: 0 20px;
     min-height: 60vh;
+    transition: all 0.3s ease; /* Ermöglicht sanftes Umschalten */
 }
 
 /* --- 4. Content & Karten-Optik --- */
-.nav-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+.nav-card, #local-nav { 
+    background: white; 
+    padding: 20px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+    height: fit-content;
+}
+
 .nav-card ul { list-style: none; padding: 0; }
 .nav-card li { margin-bottom: 10px; }
 .nav-card a { color: #004a99; text-decoration: none; font-weight: 600; }
 
 .guide-article { 
-    display: none; /* WICHTIG: Versteckt Artikel standardmäßig */
     background: white; 
     padding: 30px; 
     border-radius: 10px; 
     box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
 }
 
-.tool-intro { background: #eef4fb; border-left: 5px solid #004a99; padding: 20px; border-radius: 5px; margin-bottom: 25px; }
+/* WICHTIG: Standardmäßig ausgeblendet für den Automaten, 
+   aber via JS oder inline-style sichtbar gemacht */
+.gender-automat-page .guide-article {
+    display: none;
+}
 
-/* --- 5. Sticky Gender-Buttons --- */
+.tool-intro { 
+    background: #eef4fb; 
+    border-left: 5px solid #004a99; 
+    padding: 20px; 
+    border-radius: 5px; 
+    margin-bottom: 25px; 
+}
+
+/* --- 5. Gender-Buttons --- */
 .gender-controls {
     position: sticky;
     bottom: 20px;
@@ -49,54 +104,73 @@ header { background: #004a99; color: white; padding: 1rem 5%; display: flex; jus
     box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
 }
 
-.gender-controls button { padding: 10px 20px; cursor: pointer; border: none; border-radius: 5px; font-weight: bold; transition: 0.3s; }
+.gender-controls button { 
+    padding: 10px 20px; 
+    cursor: pointer; 
+    border: none; 
+    border-radius: 5px; 
+    font-weight: bold; 
+    transition: 0.3s; 
+}
 
-/* --- 6. RTL-Reparatur --- */
+/* --- 6. RTL-Logik (Repariert) --- */
 @media screen and (min-width: 768px) {
-    main.layout-wrapper.rtl-layout { grid-template-columns: 1fr 280px; }
-    main.layout-wrapper.rtl-layout #local-nav { grid-column: 2; grid-row: 1; }
-    main.layout-wrapper.rtl-layout #content-area { grid-column: 1; grid-row: 1; }
+    /* Wenn die Klasse .rtl-layout aktiv ist, tauschen wir die Spalten */
+    .layout-wrapper.rtl-layout { 
+        grid-template-columns: 1fr 280px; 
+    }
+    
+    .layout-wrapper.rtl-layout #local-nav { 
+        grid-column: 2; 
+    }
+    
+    .layout-wrapper.rtl-layout #content-area { 
+        grid-column: 1; 
+    }
 }
 
-footer { text-align: center; padding: 25px; background: #333; color: white; margin-top: 50px; }
+/* --- 7. Footer --- */
+footer { 
+    text-align: center; 
+    padding: 25px; 
+    background: #333; 
+    color: white; 
+    margin-top: 50px; 
+}
+
 footer a { color: #ccc; text-decoration: none; font-size: 0.9rem; }
-
-/* --- 7. Markierung für die aktuelle Seite im Menü --- */
-#main-nav a.active {
-    text-decoration: underline;
-    text-underline-offset: 8px; 
-    text-decoration-thickness: 3px; 
-    color: #ffd700; 
-}
 
 /* --- 8. Responsivität (Mobile Ansicht) --- */
 @media screen and (max-width: 768px) {
-    /* Das Grid wird einspaltig */
     .layout-wrapper {
         grid-template-columns: 1fr; 
         margin: 10px auto;
         gap: 15px;
     }
 
-    
     #local-nav {
-        order: -1; 
+        order: -1; /* Nav erscheint mobil oben */
     }
 
     header {
         flex-direction: column; 
         text-align: center;
-        gap: 10px;
+        gap: 15px;
     }
 
     #main-nav ul {
         flex-direction: column; 
-        gap: 5px;
+        gap: 10px;
+        align-items: center;
     }
 
     .gender-controls {
         position: relative; 
         flex-direction: column;
         bottom: 0;
+    }
+    
+    #toggle-layout-btn {
+        width: 100%;
     }
 }

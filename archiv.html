@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archiv | LUR-CH Fachverlag</title>
 
-
     <link rel="stylesheet" href="css/style.css">
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -28,14 +27,16 @@
 </header>
 
 <main class="layout-wrapper">
-    <nav id="local-nav">
+    <aside id="local-nav">
         <div class="nav-card">
+            <h3>Archiv-Menü</h3>
             <ul>
                 <li><a href="#arch1" class="nav-trigger">Verlagsgeschichte</a></li>
                 <li><a href="#arch2" class="nav-trigger">Alte Berichte</a></li>
             </ul>
         </div>
-    </nav>
+    </aside>
+
     <section id="content-area">
         <article id="arch1" class="guide-article">
             <h2>Archiv-Eintrag: Die Gründung der Lurch-Werke</h2>
@@ -50,19 +51,25 @@
 
 <footer><p>© 2026 – LUR-CH Fachverlag | <a href="impressum.html">Impressum</a></p></footer>
 
-<script src="js/layout-script.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const triggers = document.querySelectorAll('.nav-trigger');
-        const articles = document.querySelectorAll('.guide-article');
-        triggers.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                articles.forEach(a => a.style.display = 'none');
-                document.getElementById(link.getAttribute('href').substring(1)).style.display = 'block';
-            });
+    $(document).ready(function() {
+        const $articles = $('.guide-article');
+        const $triggers = $('.nav-trigger');
+
+        // Ersten Artikel initial anzeigen
+        $articles.hide();
+        $articles.first().show();
+
+        $triggers.on('click', function(e) {
+            e.preventDefault();
+            
+            // Framework-Methoden: Verstecken und Einblenden mit Animation
+            $articles.hide();
+            const targetId = $(this).attr('href');
+            $(targetId).fadeIn(300); // Schöner Übergang (QUELLE)
+            
+            console.log("Archiv-Inhalt gewechselt via jQuery");
         });
-        if (articles.length > 0) articles[0].style.display = 'block';
     });
 </script>
 </body>
