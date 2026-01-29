@@ -8,8 +8,17 @@
     <link rel="stylesheet" href="css/style.css">
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <style>
 
-    <script src="js/layout-script.js" defer></script>
+        .layout-wrapper {
+            grid-template-columns: 1fr !important;
+            max-width: 900px;
+        }
+        .guide-article {
+            display: block !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -25,16 +34,10 @@
                 <li><a href="aktuelles.html">Aktuelles</a></li>
             </ul>
         </nav>
-        <button id="toggle-layout-btn">Schriftkultur rechts (RTL)</button>
-    </div>
+        </div>
 </header>
 
 <main class="layout-wrapper">
-    <aside id="local-nav" class="nav-card">
-        <h3>Rechtliches</h3>
-        <p>Gültig ab: 2026</p>
-    </aside>
-
     <section id="content-area"> 
         <article class="guide-article">
             <h2>Impressum</h2>

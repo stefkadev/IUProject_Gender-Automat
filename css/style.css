@@ -17,12 +17,11 @@ header {
     align-items: center; 
 }
 
-/* Gruppiert Nav und Button rechts */
 .header-controls {
     display: flex;
     align-items: center;
     gap: 30px; 
-    margin-left: auto; /* Sorgt dafür, dass die Gruppe immer nach rechts rückt */
+    margin-left: auto; /
 }
 
 #main-nav ul { 
@@ -136,5 +135,39 @@ footer {
     margin-top: 50px; 
 }
 
-/* --- 8. Responsivität --- */
+/* --- 8. Responsivität (Mobile Ansicht) --- */
 @media screen and (max-width: 768px) {
+    .layout-wrapper { 
+        grid-template-columns: 1fr; 
+        margin: 10px auto;
+        gap: 15px;
+    }
+
+    #local-nav { 
+        order: -1; 
+    }
+
+    header { 
+        flex-direction: column; 
+        gap: 15px; 
+        text-align: center;
+    }
+
+    .header-controls { 
+        flex-direction: column; 
+        gap: 10px; 
+        margin-left: 0; 
+    }
+
+    #main-nav ul { 
+        flex-direction: column; 
+        gap: 10px;
+        align-items: center; 
+    }
+
+    .gender-controls {
+        position: relative; 
+        flex-direction: column;
+        bottom: 0;
+    }
+}
